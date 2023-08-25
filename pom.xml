@@ -19,4 +19,25 @@
       </plugin>
     </plugins>
   </build>
+  <dependencies>
+	  
+	<!-- La api de JPA -->
+	<dependency>
+	  <groupId>javax.persistence</groupId>
+	  <artifactId>javax.persistence-api</artifactId>
+	  <version>2.2</version>
+	</dependency>
+	<!-- La implementación de EclipseLink -->
+	<dependency>
+	  <groupId>org.eclipse.persistence</groupId>
+	  <artifactId>eclipselink</artifactId>
+	  <version>2.5.2</version>
+	</dependency>
+	<!-- JSTL -->
+	<dependency>
+		<groupId>javax.servlet</groupId>
+		<artifactId>jstl</artifactId>
+		<version>1.2</version>
+	</dependency>
+ </dependencies>
 </project>
