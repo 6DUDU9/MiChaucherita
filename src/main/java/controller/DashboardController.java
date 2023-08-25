@@ -53,7 +53,7 @@ public class DashboardController extends HttpServlet {
 			System.out.println("estamos en dashboard");
 			this.dashboard(request, response);
 			break;
-		case "verMovimiento1":
+		case "verPorTodosMovimientos":
 			System.out.println("estamos en movimientos 1");
 			this.verPorTodosMovimientos(request, response);
 			break;
