@@ -53,7 +53,7 @@ public class LoginController extends HttpServlet {
 	
 
 	private void inicio(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		// 1.- Obtener datos que me envían en la solicitud
+		// 1.- Obtener datos que me envï¿½an en la solicitud
 
 		// 2.- Llamo al Modelo para obtener datos
 
@@ -69,7 +69,7 @@ public class LoginController extends HttpServlet {
 	
 //	si nos damos cuenta en esta seccion entraria lo que teniamos en el codigo doPost
 	private void ingresar(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		// 1.- Obtener datos que me envían en la solicitud
+		// 1.- Obtener datos que me envï¿½an en la solicitud
 
 		String nombre = request.getParameter("usuario");
 		String clave = request.getParameter("password");

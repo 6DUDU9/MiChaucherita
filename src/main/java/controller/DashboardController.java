@@ -69,7 +69,7 @@ public class DashboardController extends HttpServlet {
 
 //	entonces si es inicio se va a este metodo, que SIEMPRE debe poner el Error throws
 	private void inicio(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		// 1.- Obtener datos que me envían en la solicitud
+		// 1.- Obtener datos que me envï¿½an en la solicitud
 
 		// 2.- Llamo al Modelo para obtener datos
 
@@ -78,7 +78,7 @@ public class DashboardController extends HttpServlet {
 	}
 
 	private void dashboard(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		// 1.- Obtener datos que me envían en la solicitud
+		// 1.- Obtener datos que me envï¿½an en la solicitud
 
 		// 2.- Llamo al Modelo para obtener datos
 
@@ -95,7 +95,7 @@ public class DashboardController extends HttpServlet {
 //	si nos damos cuenta en esta seccion entraria lo que teniamos en el codigo doPost
 	private void verPorTodosMovimientos(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
-		// 1.- Obtener datos que me envían en la solicitud
+		// 1.- Obtener datos que me envï¿½an en la solicitud
 		HttpSession session = request.getSession();
 		User userLogeado = (User) session.getAttribute("UserLogeado");
 		// 2.- Llamo al Modelo para obtener datos
@@ -111,7 +111,7 @@ public class DashboardController extends HttpServlet {
 	private void verPorCuenta(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		/*
-		// 1.- Obtener datos que me envían en la solicitud
+		// 1.- Obtener datos que me envï¿½an en la solicitud
 		HttpSession session = request.getSession();
 		User userLogeado = (User) session.getAttribute("UserLogeado");
 		int idAccount = Integer.parseInt(request.getParameter("idCuenta"));
@@ -134,7 +134,7 @@ public class DashboardController extends HttpServlet {
 	private void verPorCategoria(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		/*
-		// 1.- Obtener datos que me envían en la solicitud
+		// 1.- Obtener datos que me envï¿½an en la solicitud
 		HttpSession session = request.getSession();
 		User userLogeado = (User) session.getAttribute("UserLogeado");
 		int idCategory = Integer.parseInt(request.getAttribute("idCategory"));
