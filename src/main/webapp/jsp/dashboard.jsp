@@ -1,3 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
     <script src="https://kit.fontawesome.com/ae4e5d458c.js" crossorigin="anonymous"></script>
     <title>Dashboard</title>
 
@@ -17,7 +20,7 @@
     <header class="bg-yellow d-flex align-items-center flex-wrap justify-content-center p-3">
         <a href="DashboardController"
             class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-            <img class="" src="img/logo.png" alt="Imagen de una billetera">
+            <img class="" src="${pageContext.request.contextPath}/img/logo.png" alt="Imagen de una billetera">
             <h1 class="font px-3 c-darkgray">Mi Chaucherita Web</h1>
         </a>
         <ul class="nav nav-pills">
@@ -34,7 +37,7 @@
                     class="nav-link c-yellow a-hover fs-5">Gasto</a></li>
             <li class="nav-item"><a data-bs-toggle="modal" data-bs-target="#transferModal"
                     class="nav-link c-yellow a-hover fs-5">Transferencia</a></li>
-            <li class="nav-item"><a href="MovesController" class="nav-link c-yellow a-hover fs-5">Ver movimientos</a>
+            <li class="nav-item"><a href="moves.jsp" class="nav-link c-yellow a-hover fs-5">Ver movimientos</a>
             </li>
         </ul>
     </nav>
@@ -162,8 +165,8 @@
                         <label for="categoria" class="form-label">Categoría:</label>
                         <select class="form-select" id="categoria" name="categoria">
                             <option selected hidden></option>
-                            <option value="cat1">Categoría 1</option>
-                            <option value="cat2">Categoría 2</option>
+                            <option value="cat1">CategorÃ­a 1</option>
+                            <option value="cat2">CategorÃ­a 2</option>
                         </select>
                         <label for="descripcion" class="form-label">Descripción:</label>
                         <textarea class="form-control" id="descripcion" name="descripcion" rows="1"></textarea>

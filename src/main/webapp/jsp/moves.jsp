@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
     <script src="https://kit.fontawesome.com/ae4e5d458c.js" crossorigin="anonymous"></script>
     <title>Movimientos</title>
 
@@ -17,7 +19,7 @@
     <header class="bg-yellow d-flex align-items-center flex-wrap justify-content-center p-3">
         <a href="DashboardController"
             class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-            <img class="" src="img/logo.png" alt="Imagen de una billetera">
+            <img class="" src="${pageContext.request.contextPath}/img/logo.png" alt="Imagen de una billetera">
             <h1 class="font px-3 c-darkgray">Mi Chaucherita Web</h1>
         </a>
         <ul class="nav nav-pills">
@@ -31,11 +33,15 @@
 
     <div class="bg-gray row gap-3 m-0 w-auto p-5 ">
 
-        <div class="row d-flex bg-dark-subtle rounded flex-column m-0">
-            <form action="">
-                <input type="month" class="text-center my-3 form-control font-s-30" value="" name="" id="">
+        <div class="row d-flex bg-dark-subtle rounded flex-column m-0 py-3">
+            <form action="" class="text-center">
+                <input type="month" class="text-center mb-3 form-control font-s-30" value="" name="" id="">
+                <select class="form-select c-darkgray fs-2 fw-bold mb-3 text-center" id="categoria" name="categoria">
+                    <option class="fs-4 text-center" value="cuenta1">Efectivo</option>
+                    <option class="fs-4 text-center" value="cuenta2">Banco Pichincha</option>
+                </select>
+                <button type="submit" class="btn btn-hover bg-yellow fw-bold">Actualizar</button>
             </form>
-            <h1 class="text-center card-title c-darkgray fs-1 fw-bold mb-4">Efectivo</h1>
         </div>
 
         <div class="row container rounded d-flex flex-column bg-dark-subtle m-0">
