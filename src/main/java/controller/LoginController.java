@@ -75,7 +75,7 @@ public class LoginController extends HttpServlet {
 		String clave = request.getParameter("password");
 
 		// 2.- Llamo al Modelo para obtener datos
-
+		request.getRequestDispatcher("DashboardController?ruta=dashboard").forward(request, response);
 		
 	}
 }

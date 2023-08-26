@@ -16,8 +16,8 @@ public class mainTestf {
 		Account cuentaPichincha = new Account(2, "pichincha", 1000);
 		
 //		Categoria
-		Category categoriaI = new Category(1,"PERSONAL");
-		Category categoriaS = new Category(2,"Trabajo");
+		Category categoriaI = new Category(1,"PERSONAL", 19.2);
+		Category categoriaS = new Category(2,"Trabajo", 20.8);
 		
 //		relizar movimiento
 		String dateString = "2023-08-20";
