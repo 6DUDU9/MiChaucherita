@@ -54,9 +54,7 @@ public class LoginController extends HttpServlet {
 
 	private void inicio(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		// 1.- Obtener datos que me env�an en la solicitud
-
 		// 2.- Llamo al Modelo para obtener datos
-
 		// 3.- Llamo a la Vista
 		response.sendRedirect("jsp/login.jsp");
 	}
