@@ -59,8 +59,12 @@ public class DashboardController extends HttpServlet {
 			this.verPorTodosMovimientos(request, response);
 			break;
 		case "gasto":
-			System.out.println("estamos en movimientos 1");
-			this.verPorTodosMovimientos(request, response);
+			System.out.println("estamos en gasto");
+			this.gasto(request, response);
+			break;
+		case "ingreso":
+			System.out.println("estamos en ingreso");
+			this.ingreso(request, response);
 			break;
 		case "salir":
 			this.salir(request, response);
@@ -72,7 +76,9 @@ public class DashboardController extends HttpServlet {
 		}
 	}
 
-//	entonces si es inicio se va a este metodo, que SIEMPRE debe poner el Error throws
+
+
+	//	entonces si es inicio se va a este metodo, que SIEMPRE debe poner el Error throws
 	private void inicio(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		// 1.- Obtener datos que me env�an en la solicitud
 
@@ -117,6 +123,22 @@ public class DashboardController extends HttpServlet {
 	private void salir(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		request.getSession().invalidate();
 		response.sendRedirect("jsp/login.jsp");
+	}
+	
+	private void gasto(HttpServletRequest request, HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		Integer catId = Integer.parseInt(request.getParameter("categoria"));
+		String descripcion = request.getParameter("descripcion");
+		String fecha = request.getParameter("fecha");
+		String monto = request.getParameter("monto");
+		Integer cuentaId = Integer.parseInt(request.getParameter("cuenta"));
+		
+		System.out.println(""+ catId + descripcion + fecha+ monto+ cuentaId);
+	}
+	
+	private void ingreso(HttpServletRequest request, HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		
 	}
 
 //	si nos damos cuenta en esta seccion entraria lo que teniamos en el codigo doPost

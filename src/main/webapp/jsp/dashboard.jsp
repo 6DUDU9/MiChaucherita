@@ -147,12 +147,12 @@
 						aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
-					<form action="SpentController" method="">
+					<form action="DashboardController?ruta=gasto" method="POST">
 						<label for="categoria" class="form-label">Categoría:</label> <select
 							class="form-select" id="categoria" name="categoria">
 							<option selected hidden></option>
 							<c:forEach items="${categoriasG}" var="categoria">
-								<option value="cat1">${categoria.categoryName}</option>
+								<option value="${categoria.id}">${categoria.categoryName}</option>
 							</c:forEach>
 						</select> <label for="descripcion" class="form-label">Descripción:</label>
 						<textarea class="form-control" id="descripcion" name="descripcion"
@@ -160,13 +160,13 @@
 						<label for="fecha" class="form-label">Fecha:</label> <input
 							type="date" class="form-control" value="" name="fecha" id="fecha">
 						<label for="monto" class="form-label">Monto:</label> <input
-							type="text" name="pago" id="pago" oninput="formatMoney(this)"
-							class="form-control" required> <label for="pago"
+							type="text" name="monto" id="monto" oninput="formatMoney(this)"
+							class="form-control" required> <label for="cuenta"
 							class="form-label">Cuenta:</label> <select class="form-select"
-							id="pago" name="pago">
+							id="cuenta" name="cuenta">
 							<option selected hidden></option>
 							<c:forEach items="${cuentas}" var="cuenta">
-								<option value="cat1">${cuenta.accountName}</option>
+								<option value="${cuenta.id}">${cuenta.accountName}</option>
 							</c:forEach>
 						</select>
 						<div class="modal-footer">
@@ -245,10 +245,10 @@
 						<label for="fecha" class="form-label">Fecha:</label> <input
 							type="date" class="form-control" value="" name="fecha" id="fecha">
 						<label for="monto" class="form-label">Monto:</label> <input
-							type="text" name="pago" id="pago" oninput="formatMoney(this)"
+							type="text" name="monto" id="monto" oninput="formatMoney(this)"
 							class="form-control" required> <label for="pago"
 							class="form-label">Cuenta:</label> <select class="form-select"
-							id="pago" name="pago">
+							id="cuenta" name="cuenta">
 							<option selected hidden></option>
 							<c:forEach items="${cuentas}" var="cuenta">
 								<option value="cat1">${cuenta.accountName}</option>
@@ -265,7 +265,20 @@
 			</div>
 		</div>
 	</div>
+	<script>
+		function formatMoney(input) {
+			let value = input.value.replace(/[^\d.]/g, ''); // Remover caracteres no numéricos excepto punto
+			value = value.replace(/(\..*?)\..*/g, '$1'); // Permitir solo un punto decimal
 
+			// Si hay un punto decimal, asegurarse de que no se ingrese otro punto a la derecha
+			if (value.indexOf('.') !== -1) {
+				const parts = value.split('.');
+				value = parts[0] + '.' + parts[1].substr(0, 2);
+			}
+
+			input.value = '$' + value; // Agregar símbolo de moneda
+		}
+	</script>
 	<script
 		src=" https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
