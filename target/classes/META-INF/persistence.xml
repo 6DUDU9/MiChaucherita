@@ -6,7 +6,6 @@ xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org
 	<persistence-unit name="jpaMiChaucherita" transaction-type="RESOURCE_LOCAL">
 		<!-- el proveedor de la persistencia -->
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-
 		<!-- Son los modelos que el ORM va a manejar -->
 		<class>model.Account</class>
 		<class>model.User</class>

@@ -3,16 +3,14 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.*;
 
-<<<<<<< HEAD
 
-@Entity
-@Table(name = "User")
-=======
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
->>>>>>> 872f1a69e0a9a5f31e35190f088ccd28759ed501
+@Entity
+@Table(name = "User")
 public class User implements Serializable{
 	
 	private static final long serialVersionUID = 1L;

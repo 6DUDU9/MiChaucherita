@@ -21,14 +21,11 @@ public class Category implements Serializable{
 	private Integer id;
 	@Column(name = "category_name")
 	private String categoryName;
-<<<<<<< HEAD
+
 	@Column(name = "value")
 	private Double value;
 	@Column(name = "type")
 	private Type type;
-=======
-	private double value;
->>>>>>> 872f1a69e0a9a5f31e35190f088ccd28759ed501
 	
 //	------------------------ BUILDER ------------------------
 	public Category() {
