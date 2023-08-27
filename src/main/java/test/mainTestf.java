@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import model.Account;
 import model.Category;
 import model.Move;
+import model.Type;
 import model.User;
 
 public class mainTestf {
@@ -19,8 +20,8 @@ public class mainTestf {
 		Account cuentaPichincha = new Account(2, "pichincha", 1000, usuario);
 		
 //		Categoria
-		Category categoriaI = new Category(1,"PERSONAL", 19.2);
-		Category categoriaS = new Category(2,"Trabajo", 20.8);
+		Category categoriaI = new Category("PERSONAL", 19.2, Type.INCOME);
+		Category categoriaS = new Category("Trabajo", 20.8, Type.SPENT);
 		
 //		relizar movimiento
 		String dateString = "2023-08-20";

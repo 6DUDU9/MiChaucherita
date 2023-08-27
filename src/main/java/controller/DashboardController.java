@@ -104,17 +104,13 @@ public class DashboardController extends HttpServlet {
 		accounts.add(account1);
 		accounts.add(account2);
 
-		Category catgory1 = new Category(0, "Comida", 54.50);
-		Category catgory2 = new Category(1, "Vestimenta", 85.00);
+		
 		List<Category> categoriesSpent = new ArrayList<>();
-		categoriesSpent.add(catgory1);
-		categoriesSpent.add(catgory2);
+		
 
-		Category catgory3 = new Category(0, "Nomina", 3000.0);
-		Category catgory4 = new Category(1, "Ahorros", 850.50);
+		
 		List<Category> categoriesIncome = new ArrayList<>();
-		categoriesIncome.add(catgory3);
-		categoriesIncome.add(catgory4);
+	
 
 		request.setAttribute("categoriasG", categoriesSpent);
 		request.setAttribute("categoriasI", categoriesIncome);

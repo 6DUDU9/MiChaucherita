@@ -31,10 +31,11 @@ public class Category implements Serializable{
 	public Category() {
 		
 	}
-	public Category(int id, String categoryName, Double value) {
-		this.id = id;
+	public Category( String categoryName, Double value, Type type) {
+		
 		this.categoryName = categoryName;
 		this.value = value;
+		this.type = type;
 	}
 	
 //	------------------------ SET && GET ------------------------ 

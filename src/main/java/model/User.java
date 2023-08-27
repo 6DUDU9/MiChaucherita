@@ -84,6 +84,7 @@ public class User implements Serializable{
 		}
 		return users;
 	}
+	//BORRAR< INECESARIO, METODO EN JPAUser
 	
 	public User authorize(String ctausuario, String password) {
 		User authUser = null;
