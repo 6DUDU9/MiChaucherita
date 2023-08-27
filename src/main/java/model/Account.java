@@ -27,9 +27,14 @@ public class Account implements Serializable{
 	public  Account() {
 	}
 	public Account(String accountName, double balance) {
-		
 		this.accountName = accountName;
 		this.balance = balance;
+	}
+	public Account(int id, String accountName, double balance, User user) {
+		this.id = id;
+		this.accountName = accountName;
+		this.balance = balance;
+		this.user = user;
 	}
 	
 //	------------------------ SET && GET ------------------------ 
@@ -74,5 +79,10 @@ public class Account implements Serializable{
 			return false;
 		}
 		return true;
+	}
+	@Override
+	public String toString() {
+		return "Account [id=" + id + ", accountName=" + accountName + ", balance=" + balance + ", user=" + user
+				+ ", moves=" + moves + "]";
 	}
 }

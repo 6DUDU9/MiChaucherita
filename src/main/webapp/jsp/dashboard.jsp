@@ -55,7 +55,7 @@
 			<li class="nav-item"><a data-bs-toggle="modal"
 				data-bs-target="#transferModal"
 				class="nav-link c-yellow a-hover fs-5">Transferencia</a></li>
-			<li class="nav-item"><a href="moves.jsp"
+			<li class="nav-item"><a href="./DashboardController?ruta=verPorTodosMovimientos"
 				class="nav-link c-yellow a-hover fs-5">Ver movimientos</a></li>
 		</ul>
 	</nav>
@@ -94,10 +94,8 @@
 							<h4 class="fw-bold m-0">
 								<fmt:formatNumber type="currency" value="${cuenta.balance}" />
 							</h4>
-							<a
-								class="d-inline-block link-offset-2 link-underline link-underline-opacity-0 link-underline-opacity-100-hover">Ver
-								movimientos</a> <a
-								class=" d-inline-block link-offset-2 link-underline link-underline-opacity-0 link-underline-opacity-100-hover">Ajustar</a>
+							<a href="./DashboardController?ruta=verPorCuenta&cuentaID=1" class="nav-link c-yellow a-hover fs-5">Ver movimientos</a> <a
+								class=" d-inline-block link-offset-2 link-underline link-underline-opacity-0 link-underline-opacity-100-hover">Ajustar</a>	
 						</div>
 					</c:forEach>
 

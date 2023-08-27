@@ -11,8 +11,6 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
     <script src="https://kit.fontawesome.com/ae4e5d458c.js" crossorigin="anonymous"></script>
     <title>Movimientos</title>
-
-
 </head>
 
 <body>
@@ -37,8 +35,11 @@
             <form action="" class="text-center">
                 <input type="month" class="text-center mb-3 form-control font-s-30" value="" name="" id="">
                 <select class="form-select c-darkgray fs-2 fw-bold mb-3 text-center" id="categoria" name="categoria">
-                    <option class="fs-4 text-center" value="cuenta1">Efectivo</option>
-                    <option class="fs-4 text-center" value="cuenta2">Banco Pichincha</option>
+                    
+						<option class="card-body mb-4">
+							<h2 class="c-gray fw-bold m-1">${accountName} </h2>
+						</option>
+					
                 </select>
                 <button type="submit" class="btn btn-hover bg-yellow fw-bold">Actualizar</button>
             </form>
@@ -86,14 +87,7 @@
             </div>
 
         </div>
-
-
-
-
     </div>
-
-
-
     <script src=" https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
         crossorigin="anonymous"></script>

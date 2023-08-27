@@ -1,28 +1,20 @@
 package jpa;
 
 import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
-
 import model.Account;
-import model.Category;
-import model.Type;
+
 
 public class JPAAccount {
 
-	
-	
 	public Account getById(int id) {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpaMiChaucherita");
 		EntityManager em = emf.createEntityManager();
-		
 		//Seleccionar la cuenta que cumple con un id
-		
 		Account account = em.find(Account.class, id);
-			
 		return account;
 	}
 	

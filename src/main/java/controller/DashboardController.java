@@ -58,9 +58,16 @@ public class DashboardController extends HttpServlet {
 			System.out.println("estamos en dashboard");
 			this.dashboard(request, response);
 			break;
+//			C.U: Ver Movmientos
 		case "verPorTodosMovimientos":
 			System.out.println("estamos en movimientos 1");
 			this.verPorTodosMovimientos(request, response);
+			break;
+		case "verPorCuenta":
+			int cuentaID = Integer.parseInt(request.getParameter("cuentaID"));
+			System.out.println(cuentaID);
+			System.out.println("estamos en ver movimientos por Cuenta");
+			this.verPorCuenta(request, response, cuentaID);
 			break;
 		case "gasto":
 			System.out.println("estamos en gasto");
@@ -83,7 +90,7 @@ public class DashboardController extends HttpServlet {
 	// entonces si es inicio se va a este metodo, que SIEMPRE debe poner el Error
 	// throws
 	private void inicio(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		// 1.- Obtener datos que me env�an en la solicitud
+		// 1.- Obtener datos que me envï¿½an en la solicitud
 
 		// 2.- Llamo al Modelo para obtener datos
 
@@ -93,7 +100,7 @@ public class DashboardController extends HttpServlet {
 
 	private void dashboard(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
-		// 1.- Obtener datos que me env�an en la solicitud
+		// 1.- Obtener datos que me envï¿½an en la solicitud
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("ctaUser");
 		String nameUser = user.getUsername();
@@ -193,10 +200,10 @@ public class DashboardController extends HttpServlet {
 
 	}
 
-//	si nos damos cuenta en esta seccion entraria lo que teniamos en el codigo doPost
+//	----------------------------------- VER MOVIMIENTOS ---------------------------------------------------
 	private void verPorTodosMovimientos(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
-		// 1.- Obtener datos que me env�an en la solicitud
+		// 1.- Obtener datos que me envï¿½an en la solicitud
 		HttpSession session = request.getSession();
 		User userLogeado = (User) session.getAttribute("UserLogeado");
 		// 2.- Llamo al Modelo para obtener datos
@@ -209,30 +216,31 @@ public class DashboardController extends HttpServlet {
 		request.getRequestDispatcher("jsp/moves.jsp").forward(request, response);
 	}
 
-	private void verPorCuenta(HttpServletRequest request, HttpServletResponse response)
+	private void verPorCuenta(HttpServletRequest request, HttpServletResponse response, int cuentaID)
 			throws IOException, ServletException {
-		/*
-		 * // 1.- Obtener datos que me env�an en la solicitud HttpSession session =
-		 * request.getSession(); User userLogeado = (User)
-		 * session.getAttribute("UserLogeado"); int idAccount =
-		 * Integer.parseInt(request.getParameter("idCuenta"));
-		 * 
-		 * // Este metodo me ayuda a obtener por Id una cuenta JPAAccount jpaAccount =
-		 * new JPAAccount(); Account account = (Accunt) jpaAccount.getById(idAccount);
-		 * 
-		 * // 2.- Llamo al Modelo para obtener datos JPAMove jpaMove = new JPAMove();
-		 * ArrayList<Move> movimientos = (ArrayList<Move>) jpaMove.filtrar(account);
-		 * 
-		 * // 3.- Llamo a la Vista enviando datos request.setAttribute("user",
-		 * userLogeado); request.setAttribute("movimientos", movimientos);
-		 * request.getRequestDispatcher("jsp/moves.jsp").forward(request, response);
-		 */
+		// 1.- Obtener datos que me env�an en la solicitud
+		HttpSession session = request.getSession();
+		User userLogeado = (User) session.getAttribute("UserLogeado");
+		// Este metodo me ayuda a obtener por Id una cuenta
+		JPAAccount jpaAccount = new JPAAccount();
+		Account account = (Account)jpaAccount.getById(cuentaID);
+		System.out.println(account.getAccountName());
+
+		// 2.- Llamo al Modelo para obtener datos
+		JPAMove jpaMove = new JPAMove();
+		ArrayList<Move> movimientos = (ArrayList<Move>) jpaMove.filtrar(account);
+
+		// 3.- Llamo a la Vista enviando datos
+		request.setAttribute("user", userLogeado);
+		request.setAttribute("accountName", account.getAccountName());
+		request.setAttribute("movimientos", movimientos);
+		request.getRequestDispatcher("jsp/moves.jsp").forward(request, response);
 	}
 
 	private void verPorCategoria(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		/*
-		 * // 1.- Obtener datos que me env�an en la solicitud HttpSession session =
+		 * // 1.- Obtener datos que me envï¿½an en la solicitud HttpSession session =
 		 * request.getSession(); User userLogeado = (User)
 		 * session.getAttribute("UserLogeado"); int idCategory =
 		 * Integer.parseInt(request.getAttribute("idCategory"));

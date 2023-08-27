@@ -1,9 +1,7 @@
 package model;
 
-import java.time.LocalDate;
 import java.io.Serializable;
 import java.sql.Date;
-
 import javax.persistence.*;
 
 @Entity
@@ -91,8 +89,6 @@ public class Move implements Serializable {
 	}
 
 //	------------------------ Methodes || Business Rules ------------------------
-
-
 	@Override
 	public String toString() {
 		return "Category=" + category.getCategoryName() + "\n"+ "amount=" + amount + ", description=" + description+", date=" + date  
