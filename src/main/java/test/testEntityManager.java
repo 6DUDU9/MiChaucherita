@@ -161,9 +161,9 @@ public class testEntityManager {
 	
 		
 //		tener la entity a insertar
-		Account account1 = new Account("Banco Pichincha", 465.0);
+		Account account1 = new Account("Banco Pichincha", 0.0);
 		Account account2 = new Account("Banco Bolivariano", 0.0);
-		Account account3 = new Account("Efectivo", 120.0);
+		Account account3 = new Account("Efectivo", 0.0);
 
 		
 //		INSERTAR
