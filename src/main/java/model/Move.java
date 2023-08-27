@@ -2,6 +2,8 @@ package model;
 
 import java.time.LocalDate;
 import java.io.Serializable;
+import java.sql.Date;
+
 import javax.persistence.*;
 
 @Entity
@@ -16,7 +18,7 @@ public class Move implements Serializable {
 	@Column(name = "amount")
 	private Double amount;
 	@Column(name = "date")
-	private LocalDate date;
+	private Date date;
 	@Column(name = "description")
 	private String description;
 	@ManyToOne(cascade = CascadeType.REFRESH)
@@ -31,8 +33,7 @@ public class Move implements Serializable {
 		
 	}
 
-	public Move(int id, LocalDate date, double balance, String description, Category category, Account account) {
-		this.id = id;
+	public Move(Date date, double balance, String description, Category category, Account account) {
 		this.date = date;
 		this.amount = balance;
 		this.description = description;
@@ -49,11 +50,11 @@ public class Move implements Serializable {
 		this.id = id;
 	}
 
-	public LocalDate getDate() {
+	public Date getDate() {
 		return date;
 	}
 
-	public void setDate(LocalDate date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 

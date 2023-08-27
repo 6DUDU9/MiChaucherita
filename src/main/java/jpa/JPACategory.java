@@ -1,6 +1,7 @@
 package jpa;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -8,6 +9,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
+import model.Account;
 import model.Category;
 import model.Type;
 
@@ -31,5 +33,18 @@ public class JPACategory {
 		Query q = em.createQuery("SELECT c FROM Category c WHERE c.type= :type");
 		q.setParameter("type", type);
 		return q.getResultList();
+	}
+	public void updateValue(int id, double amount) {
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpaMiChaucherita");
+		EntityManager em = emf.createEntityManager();
+		
+		//Leo la persona con id 1
+		Category category = em.find(Category.class, id);
+		double value = category.getValue();
+		category.setValue(amount + value);
+		
+		em.getTransaction().begin();
+		em.merge(category);
+		em.getTransaction().commit();
 	}
 }

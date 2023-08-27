@@ -74,28 +74,6 @@ public class User implements Serializable{
 	}
 	
 //	------------------------ Methodes || Business Rules ------------------------	
-	public List<User> getUsers(){
-		if (users == null) {
-			users = new ArrayList<>();
-			
-			users.add(new User("Daniel", "daniel123", null));
-			users.add(new User("David", "david123", null ));
-			users.add(new User("Dorian", "dorian123", null));
-		}
-		return users;
-	}
-	//BORRAR< INECESARIO, METODO EN JPAUser
 	
-	public User authorize(String ctausuario, String password) {
-		User authUser = null;
-		List<User> listUsers = this.getUsers();
-		for (User user : listUsers) {
-			if (user.getUsername().equals(ctausuario) && user.getPassword().equals(password)) {
-				authUser = user;
-				break;
-			}
-		}
-		return authUser;
-	}
 	
 }

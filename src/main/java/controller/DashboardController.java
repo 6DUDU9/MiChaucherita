@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,7 @@ import jpa.JPAMove;
 import model.Account;
 import model.Category;
 import model.Move;
-import model.Spent;
+
 import model.Type;
 import model.User;
 
@@ -99,11 +100,8 @@ public class DashboardController extends HttpServlet {
 		session.setAttribute("nameUser", nameUser);
 
 		// 2.- Llamo al Modelo para obtener datos
-		Account account1 = new Account(0, "Banco Pichincha", 465, user);
-		Account account2 = new Account(1, "Efectivo", 120, user);
-		List<Account> accounts = new ArrayList<>();
-		accounts.add(account1);
-		accounts.add(account2);
+		JPAAccount jpaAccount = new JPAAccount();
+		List<Account> accounts = jpaAccount.getAll();
 
 		JPACategory jpaCategory = new JPACategory();
 		List<Category> categoriesSpent = jpaCategory.getCategoryList(Type.SPENT);	
@@ -136,7 +134,7 @@ public class DashboardController extends HttpServlet {
 		Integer cuentaId = Integer.parseInt(request.getParameter("cuenta"));
 
 		// 2.- Llamo al Modelo para obtener datos
-		LocalDate fechaFormatted = LocalDate.parse(fecha);
+		Date fechaFormatted = Date.valueOf(fecha);
 		String montoSinSigno = monto.replaceAll("[^\\d.]", "");
 
 		// Convertir la cadena a un valor double
@@ -149,20 +147,49 @@ public class DashboardController extends HttpServlet {
 		Category category = jpaCategory.getById(catId);
 
 		if (account.check(montoDouble)) {
-			Spent spentMove = new Spent(0, fechaFormatted, montoDouble, descripcion, category, account);
+			JPAMove jpaMove = new JPAMove();
+			Move spentMove = new Move(fechaFormatted, montoDouble, descripcion, category, account);
+			//jpaMove.insertMove(spentMove);
 			jpaAccount.updateBalance(cuentaId, -montoDouble);
-			System.out.println("SE HIZO EL GASTO");
+			jpaCategory.updateValue(catId, montoDouble);
 		} else {
 			System.out.println("NO SE PUEDE REALIAR EL GASTO");
 		}
 
 		System.out.println("" + catId + descripcion + fecha + montoDouble + cuentaId);
 		// 3.- Llamo a la Vista
-		request.getRequestDispatcher("jsp/dashboard.jsp").forward(request, response);
+		request.getRequestDispatcher("DashboardController?ruta=dashboard").forward(request, response);
 	}
 
-	private void ingreso(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
+	private void ingreso(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Integer catId = Integer.parseInt(request.getParameter("categoria"));
+		String descripcion = request.getParameter("descripcion");
+		String fecha = request.getParameter("fecha");
+		String monto = request.getParameter("monto");
+		Integer cuentaId = Integer.parseInt(request.getParameter("cuenta"));
+
+		// 2.- Llamo al Modelo para obtener datos
+		Date fechaFormatted = Date.valueOf(fecha);
+		String montoSinSigno = monto.replaceAll("[^\\d.]", "");
+
+		// Convertir la cadena a un valor double
+		double montoDouble = Double.parseDouble(montoSinSigno);
+
+		JPAAccount jpaAccount = new JPAAccount();
+		Account account = jpaAccount.getById(cuentaId);
+
+		JPACategory jpaCategory = new JPACategory();
+		Category category = jpaCategory.getById(catId);
+		
+		JPAMove jpaMove = new JPAMove();
+		Move incomeMove = new Move(fechaFormatted, montoDouble, descripcion, category, account);
+		jpaMove.insertMove(incomeMove);
+		jpaAccount.updateBalance(cuentaId, montoDouble);
+		jpaCategory.updateValue(catId, montoDouble);
+	
+		System.out.println("" + catId + descripcion + fecha + montoDouble + cuentaId);
+		// 3.- Llamo a la Vista
+		request.getRequestDispatcher("DashboardController?ruta=dashboard").forward(request, response);
 
 	}
 

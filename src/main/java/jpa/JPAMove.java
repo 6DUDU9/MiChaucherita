@@ -4,6 +4,7 @@ import java.beans.PersistenceDelegate;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.swing.text.html.parser.Entity;
@@ -15,7 +16,7 @@ import model.User;
 
 public class JPAMove {
 	
-	private EntityManager entityManager = Persistence.createEntityManagerFactory("chaucherita").createEntityManager();
+	private EntityManager entityManager = Persistence.createEntityManagerFactory("jpaMiChaucherita").createEntityManager();
 	
 //	Con este obtengo todos los movimientos (en lista) de un respectivo usuario 
 	public List<Move> getAllMovebyUser(User user) {
@@ -38,5 +39,15 @@ public class JPAMove {
 		query.setParameter("category", category);
 		query.setParameter("user", user);
 		return query.getResultList();
+	}
+	public void insertMove(Move move) {
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpaMiChaucherita");
+		EntityManager em = emf.createEntityManager();
+
+//		INSERTAR
+		em.getTransaction().begin();
+		em.persist(move);
+		em.getTransaction().commit();
+		
 	}
 }

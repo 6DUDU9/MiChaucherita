@@ -8,6 +8,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
+import jpa.JPAAccount;
 import model.Account;
 import model.Category;
 import model.Type;
@@ -18,8 +19,9 @@ public class testEntityManager {
 
 	public static void main(String[] args) {
 		
-		insertarUsuarios();
 		insertarCategorias();
+		insertarCuentas();
+		insertarUsuarios();
 		/*
 		leer();
 		actualizar();
@@ -134,8 +136,8 @@ public class testEntityManager {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpaMiChaucherita");
 		EntityManager em = emf.createEntityManager();
 		
-		
-		List<Account> accounts = null;
+		JPAAccount jpaAccount = new JPAAccount();
+		List<Account> accounts = jpaAccount.getAll();
 		
 //		tener la entity a insertar
 		User p1 = new User("Jairo","jairo123", accounts);
@@ -153,13 +155,29 @@ public class testEntityManager {
 		em.getTransaction().commit();
 		
 	}
+	private static void insertarCuentas() {
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpaMiChaucherita");
+		EntityManager em = emf.createEntityManager();
+	
+		
+//		tener la entity a insertar
+		Account account1 = new Account("Banco Pichincha", 465.0);
+		Account account2 = new Account("Banco Bolivariano", 0.0);
+		Account account3 = new Account("Efectivo", 120.0);
+
+		
+//		INSERTAR
+		em.getTransaction().begin();
+		em.persist(account1);
+		em.persist(account2);
+		em.persist(account3);
+		em.getTransaction().commit();
+		
+	}
 	
 	private static void insertarCategorias() {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpaMiChaucherita");
 		EntityManager em = emf.createEntityManager();
-		
-		
-		List<Account> accounts = null;
 		
 //		tener la entity a insertar
 		Category cat1 = new Category("Auto", 0.0, Type.SPENT);

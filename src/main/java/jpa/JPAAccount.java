@@ -1,10 +1,15 @@
 package jpa;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 import model.Account;
+import model.Category;
+import model.Type;
 
 public class JPAAccount {
 
@@ -19,6 +24,15 @@ public class JPAAccount {
 		Account account = em.find(Account.class, id);
 			
 		return account;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Account> getAll(){
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpaMiChaucherita");
+		EntityManager em = emf.createEntityManager();
+		// read the existing entries and write to console
+		Query q = em.createQuery("SELECT a FROM Account a");
+		return q.getResultList();
 	}
 
 	public void updateBalance(int id, double amount) {

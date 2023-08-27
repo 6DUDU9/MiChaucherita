@@ -107,18 +107,20 @@
 						class="m-0 flex-fill card-header bg-dark-subtle rounded text-center py-3">
 						<h1 class="text-center card-title c-darkgray fs-3 mb-3 fw-bold">Cuenta
 							Egresos:</h1>
-						<c:forEach items="${categoriasG}" var="categoria">
-							<div class="card-body mb-4">
-								<h5 class="c-gray fw-bold m-1">${categoria.categoryName}</h5>
+						<div class="row">
+							<c:forEach items="${categoriasG}" var="categoria">
+								<div class="col-4 mb-4">
+									<h5 class="c-gray fw-bold m-1">${categoria.categoryName}</h5>
 
-								<h4 class="fw-bold text-danger  m-0">
-									<fmt:formatNumber type="currency" value="${categoria.value}" />
-								</h4>
-								<a
-									class="d-inline-block link-offset-2 link-underline link-underline-opacity-0 link-underline-opacity-100-hover">Ver
-									movimientos</a>
-							</div>
-						</c:forEach>
+									<h4 class="fw-bold text-danger  m-0">
+										<fmt:formatNumber type="currency" value="${categoria.value}" />
+									</h4>
+									<a
+										class="d-inline-block link-offset-2 link-underline link-underline-opacity-0 link-underline-opacity-100-hover">Ver
+										movimientos</a>
+								</div>
+							</c:forEach>
+						</div>
 					</div>
 					<div
 						class="m-0 flex-fill card-header bg-dark-subtle rounded text-center py-3 mt-4">
@@ -239,12 +241,12 @@
 						aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
-					<form action="IncomeController" method="">
+					<form action="DashboardController?ruta=ingreso" method="POST">
 						<label for="categoria" class="form-label">Categoría:</label> <select
 							class="form-select" id="categoria" name="categoria">
 							<option selected hidden></option>
 							<c:forEach items="${categoriasI}" var="categoria">
-								<option value="cat1">${categoria.categoryName}</option>
+								<option value="${categoria.id}">${categoria.categoryName}</option>
 							</c:forEach>
 						</select> <label for="descripcion" class="form-label">Descripción:</label>
 						<textarea class="form-control" id="descripcion" name="descripcion"
@@ -258,7 +260,7 @@
 							id="cuenta" name="cuenta">
 							<option selected hidden></option>
 							<c:forEach items="${cuentas}" var="cuenta">
-								<option value="cat1">${cuenta.accountName}</option>
+								<option value="${cuenta.id}">${cuenta.accountName}</option>
 							</c:forEach>
 						</select>
 						<div class="modal-footer">

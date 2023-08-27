@@ -26,12 +26,10 @@ public class Account implements Serializable{
 //	------------------------ BUILDER ------------------------
 	public  Account() {
 	}
-	public Account(int id, String accountName, double balance, User user) {
-		super();
-		this.id = id;
+	public Account(String accountName, double balance) {
+		
 		this.accountName = accountName;
 		this.balance = balance;
-		this.user = user;
 	}
 	
 //	------------------------ SET && GET ------------------------ 
