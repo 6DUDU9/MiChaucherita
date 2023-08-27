@@ -76,6 +76,9 @@ public class DashboardController extends HttpServlet {
 			System.out.println("estamos en ingreso");
 			this.ingreso(request, response);
 			break;
+		case "transferencia":
+			this.transferencia(request, response);
+			break;
 		case "salir":
 			this.salir(request, response);
 			break;
@@ -84,6 +87,47 @@ public class DashboardController extends HttpServlet {
 		default:
 			break;
 		}
+	}
+
+	private void transferencia(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		// 1.- Obtener datos que me envï¿½an en la solicitud
+		String descripcion = request.getParameter("descripcion");
+		String fecha = request.getParameter("fecha");
+		String monto = request.getParameter("monto");
+		Integer cuentaIdOrigen = Integer.parseInt(request.getParameter("origen"));
+		Integer cuentaIdDestino = Integer.parseInt(request.getParameter("destino"));
+		// 2.- Llamo al Modelo para obtener datos
+		Date fechaFormatted = Date.valueOf(fecha);
+		String montoSinSigno = monto.replaceAll("[^\\d.]", "");
+		// Convertir la cadena a un valor double
+		double montoDouble = Double.parseDouble(montoSinSigno);
+
+		JPACategory jpaCategory = new JPACategory();
+		JPAAccount jpaAccount = new JPAAccount();
+
+		List<Category> categories = jpaCategory.getCategoryList(Type.TRANSFER);
+		Category category = categories.get(0);
+		Account accountO = jpaAccount.getById(cuentaIdOrigen);
+		Account accountD = jpaAccount.getById(cuentaIdDestino);
+
+		if (accountO.check(montoDouble)) {
+			JPAMove jpaMove = new JPAMove();
+			// Se resta el dinero de la cuenta de origen
+			Move spentMove = new Move(fechaFormatted, montoDouble, descripcion, category, accountO);
+			jpaMove.insertMove(spentMove);
+			jpaAccount.updateBalance(cuentaIdOrigen, -montoDouble);
+			// Se aumenta el dinero en la cuenta de destino
+			Move incomeMove = new Move(fechaFormatted, montoDouble, descripcion, category, accountD);
+			jpaMove.insertMove(incomeMove);
+			jpaAccount.updateBalance(cuentaIdDestino, montoDouble);
+
+		} else {
+			System.out.println("NO SE PUEDE REALIAR LA TRANSFERENCIA");
+		}
+
+		// 3.- Llamo a la Vista
+		request.getRequestDispatcher("DashboardController?ruta=dashboard").forward(request, response);
 	}
 
 	// entonces si es inicio se va a este metodo, que SIEMPRE debe poner el Error
@@ -111,15 +155,15 @@ public class DashboardController extends HttpServlet {
 		List<Account> accounts = jpaAccount.getAll();
 
 		JPACategory jpaCategory = new JPACategory();
-		List<Category> categoriesSpent = jpaCategory.getCategoryList(Type.SPENT);			
+		List<Category> categoriesSpent = jpaCategory.getCategoryList(Type.SPENT);
 		List<Category> categoriesIncome = jpaCategory.getCategoryList(Type.INCOME);
-		
+
 		JPAMove jpaMove = new JPAMove();
 		Date date = new Date(utilDate.getTime());
 		Double income = jpaMove.getBalanceByType(date, Type.INCOME);
 		Double discharge = jpaMove.getBalanceByType(date, Type.SPENT);
 		Double balance = income - discharge;
-		
+
 		request.setAttribute("categoriasG", categoriesSpent);
 		request.setAttribute("categoriasI", categoriesIncome);
 		request.setAttribute("cuentas", accounts);
@@ -174,7 +218,8 @@ public class DashboardController extends HttpServlet {
 		request.getRequestDispatcher("DashboardController?ruta=dashboard").forward(request, response);
 	}
 
-	private void ingreso(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private void ingreso(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		Integer catId = Integer.parseInt(request.getParameter("categoria"));
 		String descripcion = request.getParameter("descripcion");
 		String fecha = request.getParameter("fecha");
@@ -193,13 +238,13 @@ public class DashboardController extends HttpServlet {
 
 		JPACategory jpaCategory = new JPACategory();
 		Category category = jpaCategory.getById(catId);
-		
+
 		JPAMove jpaMove = new JPAMove();
 		Move incomeMove = new Move(fechaFormatted, montoDouble, descripcion, category, account);
 		jpaMove.insertMove(incomeMove);
 		jpaAccount.updateBalance(cuentaId, montoDouble);
 		jpaCategory.updateValue(catId, montoDouble);
-	
+
 		System.out.println("" + catId + descripcion + fecha + montoDouble + cuentaId);
 		// 3.- Llamo a la Vista
 		request.getRequestDispatcher("DashboardController?ruta=dashboard").forward(request, response);
@@ -229,7 +274,7 @@ public class DashboardController extends HttpServlet {
 		User userLogeado = (User) session.getAttribute("UserLogeado");
 		// Este metodo me ayuda a obtener por Id una cuenta
 		JPAAccount jpaAccount = new JPAAccount();
-		Account account = (Account)jpaAccount.getById(cuentaID);
+		Account account = (Account) jpaAccount.getById(cuentaID);
 		System.out.println(account.getAccountName());
 
 		// 2.- Llamo al Modelo para obtener datos

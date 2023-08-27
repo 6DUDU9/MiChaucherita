@@ -199,6 +199,8 @@ public class testEntityManager {
 		Category cat16 = new Category("Deposito", 0.0, Type.INCOME);
 		Category cat17 = new Category("Salario", 0.0, Type.INCOME);
 		
+		Category cat18 = new Category("Transferencia", 0.0, Type.TRANSFER);
+		
 //		INSERTAR
 		em.getTransaction().begin();
 		em.persist(cat1);
@@ -218,6 +220,7 @@ public class testEntityManager {
 		em.persist(cat15);
 		em.persist(cat16);
 		em.persist(cat17);
+		em.persist(cat18);
 		em.getTransaction().commit();
 		
 	}
