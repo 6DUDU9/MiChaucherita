@@ -1,15 +1,30 @@
 package model;
 
 import java.time.LocalDate;
+import java.io.Serializable;
+import javax.persistence.*;
 
-public class Move {
+@Entity
+@Table(name = "move")
+public class Move implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 //	------------------ propiedades/Variables Privadas	-----------------------------------
-	private int id;
-	LocalDate date;
-	private double amount;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+	@Column(name = "amount")
+	private Double amount;
+	@Column(name = "date")
+	private LocalDate date;
+	@Column(name = "description")
 	private String description;
-	private Category category;
+	@ManyToOne(cascade = CascadeType.REFRESH)
+	@JoinColumn(name = "account")
 	private Account account;
+	@ManyToOne(cascade = CascadeType.REFRESH)
+	@JoinColumn(name = "category")
+	private Category category;
 	
 //	------------------------ BUILDER ------------------------
 	public  Move() {
@@ -75,9 +90,7 @@ public class Move {
 	}
 
 //	------------------------ Methodes || Business Rules ------------------------
-	public void ingresar() {
-		
-	}
+
 
 	@Override
 	public String toString() {

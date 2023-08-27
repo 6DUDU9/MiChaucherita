@@ -22,7 +22,7 @@
 		</plugins>
 	</build>
 	<dependencies>
-
+		<!-- Conector a la BDD -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>

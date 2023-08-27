@@ -12,10 +12,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import jpa.JPAAccount;
+import jpa.JPACategory;
 import jpa.JPAMove;
 import model.Account;
 import model.Category;
 import model.Move;
+import model.Spent;
 import model.User;
 
 @WebServlet("/DashboardController")
@@ -91,7 +93,41 @@ public class DashboardController extends HttpServlet {
 		request.getSession().invalidate();
 		response.sendRedirect("jsp/login.jsp");
 	}
+	private void gasto(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		// 1.- Obtener datos que me env an en la solicitud
+		Integer catId = Integer.parseInt(request.getParameter("categoria"));
+		String descripcion = request.getParameter("descripcion");
+		String fecha = request.getParameter("fecha");
+		String monto = request.getParameter("monto");
+		Integer cuentaId = Integer.parseInt(request.getParameter("cuenta"));
 
+		// 2.- Llamo al Modelo para obtener datos
+		LocalDate fechaFormatted = LocalDate.parse(fecha);
+		String montoSinSigno = monto.replaceAll("[^\\d.]", "");
+
+		// Convertir la cadena a un valor double
+		double montoDouble = Double.parseDouble(montoSinSigno);
+
+		JPAAccount jpaAccount = new JPAAccount();
+		Account account = jpaAccount.getById(cuentaId);
+		
+		JPACategory jpaCategory = new JPACategory();
+		Category category = jpaCategory.getById(catId);
+
+		if (account.check(montoDouble)) {
+			Spent spentMove = new Spent(0, fechaFormatted, montoDouble, descripcion, category, account);
+			jpaAccount.updateBalance(cuentaId, -montoDouble);
+			System.out.println("SE HIZO EL GASTO");
+		} else {
+			System.out.println("NO SE PUEDE REALIAR EL GASTO");
+		}
+
+		System.out.println("" + catId + descripcion + fecha + monto + cuentaId);
+		// 3.- Llamo a la Vista
+		request.getRequestDispatcher("jsp/dashboard.jsp").forward(request, response);
+	}
+	
 //	si nos damos cuenta en esta seccion entraria lo que teniamos en el codigo doPost
 	private void verPorTodosMovimientos(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {

@@ -1,9 +1,30 @@
 package model;
 
-public class Category {
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.*;
+
+//import org.eclipse.jdt.internal.compiler.ast.ThisReference;
+
+
+
+@Entity
+@Table(name = "category")
+public class Category implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 //	------------------ propiedades/Variables Privadas	-----------------------------------
-	private int id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+	@Column(name = "category_name")
 	private String categoryName;
+	@Column(name = "value")
+	private Double value;
+	@Column(name = "type")
+	private Type type;
 	
 //	------------------------ BUILDER ------------------------
 	public Category() {

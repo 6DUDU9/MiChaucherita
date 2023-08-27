@@ -5,15 +5,18 @@ import java.time.LocalDate;
 import model.Account;
 import model.Category;
 import model.Move;
+import model.User;
 
 public class mainTestf {
 
 	public static void main(String[] args) {
 		System.out.println("PRUEBA GITHUB I");
 		
+		User usuario = new User();
+		
 //		Cuenta money sin efectivo
-		Account cuentaEfectivo = new Account(1, "efectivo", 1000);
-		Account cuentaPichincha = new Account(2, "pichincha", 1000);
+		Account cuentaEfectivo = new Account(1, "efectivo", 1000, usuario);
+		Account cuentaPichincha = new Account(2, "pichincha", 1000, usuario);
 		
 //		Categoria
 		Category categoriaI = new Category(1,"PERSONAL");
