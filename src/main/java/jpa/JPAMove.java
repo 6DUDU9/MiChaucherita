@@ -1,14 +1,18 @@
 package jpa;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+
 import model.Account;
 import model.Category;
 import model.Move;
+import model.Type;
 import model.User;
 
 public class JPAMove {
@@ -47,6 +51,27 @@ public class JPAMove {
 		em.getTransaction().commit();
 		
 	}
+	
+	public Double getBalanceByType(Date date, Type categoryType) {
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpaMiChaucherita");
+		EntityManager em = emf.createEntityManager();
+        try {
+            String jpql = "SELECT SUM(m.amount) FROM Move m " +
+                          "WHERE FUNCTION('YEAR', m.date) = FUNCTION('YEAR', :date) " +
+                          "AND FUNCTION('MONTH', m.date) = FUNCTION('MONTH', :date) " +
+                          "AND m.category.type = :categoryType";
+
+            TypedQuery<Double> query = em.createQuery(jpql, Double.class);
+            query.setParameter("date", date);
+            query.setParameter("categoryType", categoryType);
+
+            Double income = query.getSingleResult();
+
+            return income != null ? income : 0.0;
+        } finally {
+            em.close();
+        }
+    }
 	
 
 	

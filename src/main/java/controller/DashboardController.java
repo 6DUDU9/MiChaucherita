@@ -105,21 +105,28 @@ public class DashboardController extends HttpServlet {
 		User user = (User) session.getAttribute("ctaUser");
 		String nameUser = user.getUsername();
 		session.setAttribute("nameUser", nameUser);
+		java.util.Date utilDate = new java.util.Date();
 
 		// 2.- Llamo al Modelo para obtener datos
 		JPAAccount jpaAccount = new JPAAccount();
 		List<Account> accounts = jpaAccount.getAll();
 
 		JPACategory jpaCategory = new JPACategory();
-		List<Category> categoriesSpent = jpaCategory.getCategoryList(Type.SPENT);	
-
-		
+		List<Category> categoriesSpent = jpaCategory.getCategoryList(Type.SPENT);			
 		List<Category> categoriesIncome = jpaCategory.getCategoryList(Type.INCOME);
-	
-
+		
+		JPAMove jpaMove = new JPAMove();
+		Date date = new Date(utilDate.getTime());
+		Double income = jpaMove.getBalanceByType(date, Type.INCOME);
+		Double discharge = jpaMove.getBalanceByType(date, Type.SPENT);
+		Double balance = income - discharge;
+		
 		request.setAttribute("categoriasG", categoriesSpent);
 		request.setAttribute("categoriasI", categoriesIncome);
 		request.setAttribute("cuentas", accounts);
+		request.setAttribute("balance", balance);
+		request.setAttribute("income", income);
+		request.setAttribute("discharge", discharge);
 
 		// 3.- Llamo a la Vista
 		request.getRequestDispatcher("jsp/dashboard.jsp").forward(request, response);
@@ -156,7 +163,7 @@ public class DashboardController extends HttpServlet {
 		if (account.check(montoDouble)) {
 			JPAMove jpaMove = new JPAMove();
 			Move spentMove = new Move(fechaFormatted, montoDouble, descripcion, category, account);
-			//jpaMove.insertMove(spentMove);
+			jpaMove.insertMove(spentMove);
 			jpaAccount.updateBalance(cuentaId, -montoDouble);
 			jpaCategory.updateValue(catId, montoDouble);
 		} else {

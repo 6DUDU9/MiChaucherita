@@ -65,21 +65,21 @@
 				<div class="col-5 card-header bg-dark-subtle rounded py-3 h-25">
 					<h1 class="text-center card-title c-darkgray fs-3 fw-bold">Saldo:</h1>
 					<h1 class="text-center card-title">
-						$865<small class="fw-light">.00</small>
+						<fmt:formatNumber type="currency" value="${balance}" />
 					</h1>
 				</div>
 				<div class="col p-0 card-header bg-dark-subtle rounded py-3 ">
 					<h1 class="text-center card-title c-darkgray fs-3 fw-bold ">Ingresos
 						totales:</h1>
 					<h1 class="text-center text-success card-title">
-						$15<small class="fw-light">.00</small>
+						<fmt:formatNumber type="currency" value="${income}" />
 					</h1>
 				</div>
 				<div class="col card-header bg-dark-subtle rounded py-3">
 					<h1 class="text-center card-title c-darkgray fs-3 fw-bold">Gastos
 						totales:</h1>
 					<h1 class="text-center text-danger card-title">
-						$15<small class="fw-light">.00</small>
+						<fmt:formatNumber type="currency" value="${discharge}" />
 					</h1>
 				</div>
 			</div>
@@ -94,7 +94,7 @@
 							<h4 class="fw-bold m-0">
 								<fmt:formatNumber type="currency" value="${cuenta.balance}" />
 							</h4>
-							<a href="./DashboardController?ruta=verPorCuenta&cuentaID=1" class="nav-link c-yellow a-hover fs-5">Ver movimientos</a> <a
+							<a href="./DashboardController?ruta=verPorCuenta&cuentaID=1" class=" d-inline-block link-offset-2 link-underline link-underline-opacity-0 link-underline-opacity-100-hover">Ver movimientos</a> <a
 								class=" d-inline-block link-offset-2 link-underline link-underline-opacity-0 link-underline-opacity-100-hover">Ajustar</a>	
 						</div>
 					</c:forEach>
