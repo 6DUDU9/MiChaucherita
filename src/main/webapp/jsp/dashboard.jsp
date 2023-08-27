@@ -197,25 +197,26 @@
 						aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
-					<form action="TransferController" method="">
+					<form action="DashboardController?ruta=transferencia" method="POST">
 						<label for="descripcion" class="form-label">Descripción:</label>
 						<textarea class="form-control" id="descripcion" name="descripcion"
 							rows="1"></textarea>
 						<label for="fecha" class="form-label">Fecha:</label> <input
 							type="date" class="form-control" value="" name="fecha" id="fecha">
 						<label for="monto" class="form-label">Monto:</label> <input
-							type="text" name="pago" id="pago" oninput="formatMoney(this)"
+							type="text" name="monto" id="monto" oninput="formatMoney(this)"
 							class="form-control" required> <label for="origen"
 							class="form-label">Origen:</label> <select class="form-select"
 							id="origen" name="origen">
 							<option selected hidden></option>
-							<option value="cuenta1">Cuenta 1</option>
-							<option value="cuenta2">Cuenta 2</option>
+							<c:forEach items="${cuentas}" var="cuenta">
+								<option value="${cuenta.id}">${cuenta.accountName}</option>
+							</c:forEach>
 						</select> <label for="destino" class="form-label">Destino:</label> <select
 							class="form-select" id="destino" name="destino">
 							<option selected hidden></option>
 							<c:forEach items="${cuentas}" var="cuenta">
-								<option value="cat1">${cuenta.accountName}</option>
+								<option value="${cuenta.id}">${cuenta.accountName}</option>
 							</c:forEach>
 						</select>
 						<div class="modal-footer">

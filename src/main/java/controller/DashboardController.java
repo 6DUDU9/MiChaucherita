@@ -41,7 +41,6 @@ public class DashboardController extends HttpServlet {
 //		Siempre se Redirecciona
 		System.out.println("YA entro por post");
 		this.ruteador(request, response);
-
 	}
 
 	private void ruteador(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -88,47 +87,15 @@ public class DashboardController extends HttpServlet {
 		}
 	}
 
-	private void dashboard(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		// 1.- Obtener datos que me envian en la solicitud
-		HttpSession session = request.getSession();
-		User user = (User) session.getAttribute("ctaUser");
-		String nameUser = user.getUsername();
-		session.setAttribute("nameUser", nameUser);
-		java.util.Date utilDate = new java.util.Date();
-
-		// 2.- Llamo al Modelo para obtener datos
-		List<Account> accounts = DAOFactory.getFactory().getAccountDAO().getAll();
-		List<Category> categoriesSpent = DAOFactory.getFactory().getCategoryDAO().getCategoryList(Type.SPENT);
-		List<Category> categoriesIncome = DAOFactory.getFactory().getCategoryDAO().getCategoryList(Type.INCOME);
-
-		Date date = new Date(utilDate.getTime());
-		Double income = DAOFactory.getFactory().getMoveDAO().getBalanceByType(date, Type.INCOME);
-		Double discharge = DAOFactory.getFactory().getMoveDAO().getBalanceByType(date, Type.SPENT);
-		Double balance = income - discharge;
-
-		request.setAttribute("categoriasG", categoriesSpent);
-		request.setAttribute("categoriasI", categoriesIncome);
-		request.setAttribute("cuentas", accounts);
-		request.setAttribute("balance", balance);
-		request.setAttribute("income", income);
-		request.setAttribute("discharge", discharge);
-
-		// 3.- Llamo a la Vista
-		request.getRequestDispatcher("jsp/dashboard.jsp").forward(request, response);
-	}
-
+	
 	private void transferencia(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
 		// 1.- Obtener datos que me envï¿½an en la solicitud
-		
 		String descripcion = request.getParameter("descripcion");
 		String fecha = request.getParameter("fecha");
 		String monto = request.getParameter("monto");
-		
 		Integer cuentaIdOrigen = Integer.parseInt(request.getParameter("origen"));
 		Integer cuentaIdDestino = Integer.parseInt(request.getParameter("destino"));
-		
 		// 2.- Llamo al Modelo para obtener datos
 		Date fechaFormatted = Date.valueOf(fecha);
 		String montoSinSigno = monto.replaceAll("[^\\d.]", "");
@@ -159,11 +126,11 @@ public class DashboardController extends HttpServlet {
 		}
 
 		// 3.- Llamo a la Vista
-		request.getRequestDispatcher("DashboardController?ruta=dashboard").forward(request, response);
+		response.sendRedirect("DashboardController?ruta=dashboard");
 	}
-
-	// entonces si es inicio se va a este metodo, que SIEMPRE debe poner el Error
-	// throws
+	
+	
+	
 	private void inicio(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		// 1.- Obtener datos que me envï¿½an en la solicitud
 
@@ -172,6 +139,36 @@ public class DashboardController extends HttpServlet {
 		// 3.- Llamo a la Vista
 		response.sendRedirect("jsp/login.jsp");
 	}
+
+	private void dashboard(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		// 1.- Obtener datos que me envian en la solicitud
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("ctaUser");
+		String nameUser = user.getUsername();
+		session.setAttribute("nameUser", nameUser);
+		java.util.Date utilDate = new java.util.Date();
+
+		// 2.- Llamo al Modelo para obtener datos
+		List<Account> accounts = DAOFactory.getFactory().getAccountDAO().getAll();
+		List<Category> categoriesSpent = DAOFactory.getFactory().getCategoryDAO().getCategoryList(Type.SPENT);
+		List<Category> categoriesIncome = DAOFactory.getFactory().getCategoryDAO().getCategoryList(Type.INCOME);
+
+		Date date = new Date(utilDate.getTime());
+		Double income = DAOFactory.getFactory().getMoveDAO().getBalanceByType(date, Type.INCOME);
+		Double discharge = DAOFactory.getFactory().getMoveDAO().getBalanceByType(date, Type.SPENT);
+		Double balance = income - discharge;
+
+		request.setAttribute("categoriasG", categoriesSpent);
+		request.setAttribute("categoriasI", categoriesIncome);
+		request.setAttribute("cuentas", accounts);
+		request.setAttribute("balance", balance);
+		request.setAttribute("income", income);
+		request.setAttribute("discharge", discharge);
+
+		// 3.- Llamo a la Vista
+		request.getRequestDispatcher("jsp/dashboard.jsp").forward(request, response);
+	}
+
 
 //	y especificamente con este metodo nos ahorramos el logoutController, aplicando asi la teoria del ruteador
 	private void salir(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -195,18 +192,14 @@ public class DashboardController extends HttpServlet {
 		// Convertir la cadena a un valor double
 		double montoDouble = Double.parseDouble(montoSinSigno);
 
-		JPAAccount jpaAccount = new JPAAccount();
-		Account account = jpaAccount.getById(cuentaId);
-
-		JPACategory jpaCategory = new JPACategory();
-		Category category = jpaCategory.getById(catId);
-
+		Account account = DAOFactory.getFactory().getAccountDAO().getById(cuentaId);
+		Category category = DAOFactory.getFactory().getCategoryDAO().getById(catId);
+		
 		if (account.check(montoDouble)) {
-			JPAMove jpaMove = new JPAMove();
 			Move spentMove = new Move(fechaFormatted, montoDouble, descripcion, category, account);
-			jpaMove.insertMove(spentMove);
-			jpaAccount.updateBalance(cuentaId, -montoDouble);
-			jpaCategory.updateValue(catId, montoDouble);
+			DAOFactory.getFactory().getMoveDAO().insertMove(spentMove);
+			DAOFactory.getFactory().getAccountDAO().updateBalance(cuentaId, -montoDouble);
+			DAOFactory.getFactory().getCategoryDAO().updateValue(catId, montoDouble);
 		} else {
 			System.out.println("NO SE PUEDE REALIAR EL GASTO");
 		}
@@ -230,18 +223,12 @@ public class DashboardController extends HttpServlet {
 
 		// Convertir la cadena a un valor double
 		double montoDouble = Double.parseDouble(montoSinSigno);
-
-		JPAAccount jpaAccount = new JPAAccount();
-		Account account = jpaAccount.getById(cuentaId);
-
-		JPACategory jpaCategory = new JPACategory();
-		Category category = jpaCategory.getById(catId);
-
-		JPAMove jpaMove = new JPAMove();
+		Account account = DAOFactory.getFactory().getAccountDAO().getById(cuentaId);
+		Category category = DAOFactory.getFactory().getCategoryDAO().getById(catId);
 		Move incomeMove = new Move(fechaFormatted, montoDouble, descripcion, category, account);
-		jpaMove.insertMove(incomeMove);
-		jpaAccount.updateBalance(cuentaId, montoDouble);
-		jpaCategory.updateValue(catId, montoDouble);
+		DAOFactory.getFactory().getMoveDAO().insertMove(incomeMove);
+		DAOFactory.getFactory().getAccountDAO().updateBalance(cuentaId, montoDouble);
+		DAOFactory.getFactory().getCategoryDAO().updateValue(catId, montoDouble);
 
 		System.out.println("" + catId + descripcion + fecha + montoDouble + cuentaId);
 		// 3.- Llamo a la Vista

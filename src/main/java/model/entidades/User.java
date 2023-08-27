@@ -4,11 +4,6 @@ import java.util.List;
 import javax.persistence.*;
 
 
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
 @Table(name = "User")
 public class User implements Serializable{
@@ -24,9 +19,6 @@ public class User implements Serializable{
     private String password;
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<Account> accounts;
-	
-	// Lista para probar el Login con datos en memoria
-	private static List<User> users = null;
 	
 //	------------------------ BUILDER ------------------------
 	public User() {
@@ -72,8 +64,5 @@ public class User implements Serializable{
 	public void setAccounts(List<Account> accounts) {
 		this.accounts = accounts;
 	}
-	
-//	------------------------ Methodes || Business Rules ------------------------	
-	
 	
 }

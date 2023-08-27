@@ -67,4 +67,12 @@ public class JPAMoveDAO extends JPAGenericDAO<Move, Integer> implements MoveDAO{
         }
 	}
 
+	@Override
+	public void insertMove(Move move) {
+		em.getTransaction().begin();
+		em.persist(move);
+		em.getTransaction().commit();
+		
+	}
+
 }
