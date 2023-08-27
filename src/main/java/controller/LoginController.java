@@ -1,6 +1,9 @@
 package controller;
 
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,7 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import model.DAO.DAOFactory;
+import model.entidades.Account;
 import model.entidades.User;
+import modelo.jpa.JPAAccount;
 import modelo.jpa.JPAUser;
 
 /**
@@ -86,6 +91,9 @@ public class LoginController extends HttpServlet {
 			// Crear la Sesion
 			HttpSession session = request.getSession();
 			session.setAttribute("ctaUser", authUser);
+			
+			JPAAccount jpaAccount = new JPAAccount();
+			jpaAccount.actualizarUsuarioCuentas(authUser);
 			
 			// 3. Llamo a la Vista
 			response.sendRedirect("DashboardController?ruta=dashboard");

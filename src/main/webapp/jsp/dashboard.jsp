@@ -27,7 +27,7 @@
 <body>
 	<header
 		class="bg-yellow d-flex align-items-center flex-wrap justify-content-center p-3">
-		<a href="DashboardController"
+		<a href="DashboardController?ruta=dashboard"
 			class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
 			<img class="" src="${pageContext.request.contextPath}/img/logo.png"
 			alt="Imagen de una billetera">
@@ -94,7 +94,7 @@
 							<h4 class="fw-bold m-0">
 								<fmt:formatNumber type="currency" value="${cuenta.balance}" />
 							</h4>
-							<a href="./DashboardController?ruta=verPorCuenta&cuentaID=1" class=" d-inline-block link-offset-2 link-underline link-underline-opacity-0 link-underline-opacity-100-hover">Ver movimientos</a> <a
+							<a href="./DashboardController?ruta=verPorCuenta&cuentaID=${cuenta.id}" class=" d-inline-block link-offset-2 link-underline link-underline-opacity-0 link-underline-opacity-100-hover">Ver movimientos</a> <a
 								class=" d-inline-block link-offset-2 link-underline link-underline-opacity-0 link-underline-opacity-100-hover">Ajustar</a>	
 						</div>
 					</c:forEach>

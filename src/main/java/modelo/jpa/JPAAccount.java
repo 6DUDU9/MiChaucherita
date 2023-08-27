@@ -7,6 +7,7 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 import model.entidades.Account;
+import model.entidades.User;
 
 
 public class JPAAccount {
@@ -39,6 +40,21 @@ public class JPAAccount {
 		
 		em.getTransaction().begin();
 		em.merge(account);
+		em.getTransaction().commit();
+	}
+	@SuppressWarnings("unchecked")
+	public void actualizarUsuarioCuentas(User user ) {
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpaMiChaucherita");
+		EntityManager em = emf.createEntityManager();
+		
+		//Leo la persona con id 1
+		Query q = em.createQuery("SELECT a FROM Account a");
+		List<Account> accounts = q.getResultList();
+		em.getTransaction().begin();
+		for (Account account : accounts) {
+			account.setUser(user);
+			em.merge(account);
+		}
 		em.getTransaction().commit();
 	}
 }
