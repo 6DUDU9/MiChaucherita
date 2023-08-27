@@ -61,10 +61,8 @@ public class DashboardController extends HttpServlet {
 			this.verPorTodosMovimientos(request, response);
 			break;
 		case "verPorCuenta":
-			int cuentaID = Integer.parseInt(request.getParameter("cuentaID"));
-			System.out.println(cuentaID);
 			System.out.println("estamos en ver movimientos por Cuenta");
-			this.verPorCuenta(request, response, cuentaID);
+			this.verPorCuenta(request, response);
 			break;
 		case "gasto":
 			System.out.println("estamos en gasto");
@@ -206,7 +204,7 @@ public class DashboardController extends HttpServlet {
 
 		System.out.println("" + catId + descripcion + fecha + montoDouble + cuentaId);
 		// 3.- Llamo a la Vista
-		request.getRequestDispatcher("DashboardController?ruta=dashboard").forward(request, response);
+		response.sendRedirect("DashboardController?ruta=dashboard");
 	}
 
 	private void ingreso(HttpServletRequest request, HttpServletResponse response)
@@ -232,7 +230,7 @@ public class DashboardController extends HttpServlet {
 
 		System.out.println("" + catId + descripcion + fecha + montoDouble + cuentaId);
 		// 3.- Llamo a la Vista
-		request.getRequestDispatcher("DashboardController?ruta=dashboard").forward(request, response);
+		response.sendRedirect("DashboardController?ruta=dashboard");
 
 	}
 
@@ -246,17 +244,20 @@ public class DashboardController extends HttpServlet {
 		JPAMove jpaMove = new JPAMove();
 		ArrayList<Move> movimientos = (ArrayList<Move>) jpaMove.getAllMovebyUser(userLogeado);
 
+		JPAAccount jpaAccount = new JPAAccount();
+		List<Account> accounts = jpaAccount.getAll();
 		// 3.- Llamo a la Vista enviando datos
-		request.setAttribute("user", userLogeado);
 		request.setAttribute("movimientos", movimientos);
+		request.setAttribute("cuentas", accounts);
 		request.getRequestDispatcher("jsp/moves.jsp").forward(request, response);
 	}
 
-	private void verPorCuenta(HttpServletRequest request, HttpServletResponse response, int cuentaID)
+	private void verPorCuenta(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		// 1.- Obtener datos que me env�an en la solicitud
 		HttpSession session = request.getSession();
 		User userLogeado = (User) session.getAttribute("UserLogeado");
+		int cuentaID = Integer.parseInt(request.getParameter("cuentaID"));
 		// Este metodo me ayuda a obtener por Id una cuenta
 		JPAAccount jpaAccount = new JPAAccount();
 		Account account = (Account) jpaAccount.getById(cuentaID);

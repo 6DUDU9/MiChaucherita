@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.DAO.DAOFactory;
 import model.entidades.User;
+import modelo.jpa.JPAAccount;
+
 
 /**
  * Servlet implementation class LoginController
@@ -84,6 +86,9 @@ public class LoginController extends HttpServlet {
 			// Crear la Sesion
 			HttpSession session = request.getSession();
 			session.setAttribute("ctaUser", authUser);
+			
+			JPAAccount jpaAccount = new JPAAccount();
+			jpaAccount.actualizarUsuarioCuentas(authUser);
 			
 			// 3. Llamo a la Vista
 			response.sendRedirect("DashboardController?ruta=dashboard");
