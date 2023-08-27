@@ -1,50 +1,44 @@
-package jpa;
+package modelo.jpa;
 
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
-import model.Account;
-import model.Category;
-import model.Type;
+import model.entidades.Account;
 
-public class JPACategory {
 
-	
-	public Category getById(int id) {
+public class JPAAccount {
+
+	public Account getById(int id) {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpaMiChaucherita");
 		EntityManager em = emf.createEntityManager();
-		
-		//Seleccionar la categoria que cumple con un id
-		
-		Category category = em.find(Category.class, id);		
-		return category;
+		//Seleccionar la cuenta que cumple con un id
+		Account account = em.find(Account.class, id);
+		return account;
 	}
+	
 	@SuppressWarnings("unchecked")
-	public List<Category> getCategoryList(Type type){
+	public List<Account> getAll(){
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpaMiChaucherita");
 		EntityManager em = emf.createEntityManager();
 		// read the existing entries and write to console
-		Query q = em.createQuery("SELECT c FROM Category c WHERE c.type= :type");
-		q.setParameter("type", type);
+		Query q = em.createQuery("SELECT a FROM Account a");
 		return q.getResultList();
 	}
-	public void updateValue(int id, double amount) {
+
+	public void updateBalance(int id, double amount) {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpaMiChaucherita");
 		EntityManager em = emf.createEntityManager();
 		
 		//Leo la persona con id 1
-		Category category = em.find(Category.class, id);
-		double value = category.getValue();
-		category.setValue(amount + value);
+		Account account = em.find(Account.class, id);
+		double balance = account.getBalance();
+		account.setBalance(balance + amount);
 		
 		em.getTransaction().begin();
-		em.merge(category);
+		em.merge(account);
 		em.getTransaction().commit();
 	}
 }

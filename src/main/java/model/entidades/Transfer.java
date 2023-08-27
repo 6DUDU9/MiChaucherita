@@ -1,4 +1,4 @@
-package model;
+package model.entidades;
 
 public class Transfer {
 //	------------------------ Variables Privadas	------------------------------

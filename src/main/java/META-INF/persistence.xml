@@ -8,10 +8,10 @@
 		<!-- el proveedor de la persistencia -->
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		<!-- Son los modelos que el ORM va a manejar -->
-		<class>model.Account</class>
-		<class>model.User</class>
-		<class>model.Move</class>
-		<class>model.Category</class>
+		<class>model.entidades.Account</class>
+		<class>model.entidades.User</class>
+		<class>model.entidades.Move</class>
+		<class>model.entidades.Category</class>
 
 		<!-- propiedades -->
 		<properties>

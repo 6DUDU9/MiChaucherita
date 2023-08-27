@@ -1,4 +1,4 @@
-package jpa;
+package modelo.jpa;
 
 import model.DAO.AccountDAO;
 import model.DAO.CategoryDAO;
@@ -6,21 +6,29 @@ import model.DAO.DAOFactory;
 import model.DAO.MoveDAO;
 import model.DAO.UserDAO;
 
-public class JPADAOFactory extends DAOFactory {
+public class JPADAOFactory extends DAOFactory{
+
 	@Override
 	public UserDAO getUserDAO() {
-		return new UserDAO();
+		return new JPAUserDAO();
 	}
-	@Override
+
+	/*@Override
 	public AccountDAO getAccountDAO() {
-		return new AccountDAO();
+		// TODO Auto-generated method stub
+		return new JPAAccountDAO();
 	}
+
 	@Override
 	public CategoryDAO getCategoryDAO() {
-		return new CategoryDAO();
+		// TODO Auto-generated method stub
+		return new JPAUserDAO();
 	}
+
 	@Override
 	public MoveDAO getMoveDAO() {
-		return new MoveDAO();
-	}
+		// TODO Auto-generated method stub
+		return new JPAUserDAO();
+	}*/
+
 }

@@ -1,4 +1,4 @@
-package jpa;
+package modelo.jpa;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
-import model.User;
+import model.entidades.User;
 
 public class JPAUser {
 	public User authorize(String username, String password) {

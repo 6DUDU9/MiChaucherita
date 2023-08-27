@@ -8,8 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import jpa.JPAUser;
-import model.User;
+import model.DAO.DAOFactory;
+import model.entidades.User;
+import modelo.jpa.JPAUser;
 
 /**
  * Servlet implementation class LoginController
@@ -78,8 +79,7 @@ public class LoginController extends HttpServlet {
 
 		// 2.- Llamo al Modelo para obtener datos
 
-		JPAUser jpaUser = new JPAUser();
-		User authUser = jpaUser.authorize(ctausuario, clave);
+		User authUser = DAOFactory.getFactory().getUserDAO().autorizar(ctausuario, clave);
 		
 		if (authUser != null) {
 			
@@ -105,8 +105,7 @@ public class LoginController extends HttpServlet {
 
 		// 2.- Llamo al Modelo para obtener datos
 
-		JPAUser jpaUser = new JPAUser();
-		User authUser = jpaUser.authorize(ctausuario, clave);
+		User authUser = DAOFactory.getFactory().getUserDAO().autorizar(ctausuario, clave);
 		
 		if (authUser != null) {
 			

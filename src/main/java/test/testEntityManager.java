@@ -8,11 +8,11 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
-import jpa.JPAAccount;
-import model.Account;
-import model.Category;
-import model.Type;
-import model.User;
+import model.entidades.Account;
+import model.entidades.Category;
+import model.entidades.Type;
+import model.entidades.User;
+import modelo.jpa.JPAAccount;
 
 
 public class testEntityManager {

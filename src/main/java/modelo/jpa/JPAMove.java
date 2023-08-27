@@ -1,4 +1,4 @@
-package jpa;
+package modelo.jpa;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -9,11 +9,11 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
-import model.Account;
-import model.Category;
-import model.Move;
-import model.Type;
-import model.User;
+import model.entidades.Account;
+import model.entidades.Category;
+import model.entidades.Move;
+import model.entidades.Type;
+import model.entidades.User;
 
 public class JPAMove {
 	

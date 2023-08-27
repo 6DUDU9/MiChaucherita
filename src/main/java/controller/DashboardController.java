@@ -13,15 +13,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import jpa.JPAAccount;
-import jpa.JPACategory;
-import jpa.JPAMove;
-import model.Account;
-import model.Category;
-import model.Move;
-
-import model.Type;
-import model.User;
+import model.entidades.Account;
+import model.entidades.Category;
+import model.entidades.Move;
+import model.entidades.Type;
+import model.entidades.User;
+import modelo.jpa.JPAAccount;
+import modelo.jpa.JPACategory;
+import modelo.jpa.JPAMove;
 
 @WebServlet("/DashboardController")
 public class DashboardController extends HttpServlet {
