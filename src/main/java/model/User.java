@@ -3,9 +3,16 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.*;
 
+<<<<<<< HEAD
 
 @Entity
 @Table(name = "User")
+=======
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+>>>>>>> 872f1a69e0a9a5f31e35190f088ccd28759ed501
 public class User implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
@@ -19,6 +26,9 @@ public class User implements Serializable{
     private String password;
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<Account> accounts;
+	
+	// Lista para probar el Login con datos en memoria
+	private static List<User> users = null;
 	
 //	------------------------ BUILDER ------------------------
 	public User() {
@@ -67,6 +77,28 @@ public class User implements Serializable{
 	}
 	
 //	------------------------ Methodes || Business Rules ------------------------	
+	public List<User> getUsers(){
+		if (users == null) {
+			users = new ArrayList<>();
+			
+			users.add(new User(1, "Daniel", "daniel123"));
+			users.add(new User(2, "David", "david123"));
+			users.add(new User(3, "Jairo", "jairo123"));
+			users.add(new User(4, "Dorian", "dorian123"));
+		}
+		return users;
+	}
 	
+	public User authorize(String ctausuario, String password) {
+		User authUser = null;
+		List<User> listUsers = this.getUsers();
+		for (User user : listUsers) {
+			if (user.getUser().equals(ctausuario) && user.getPassword().equals(password)) {
+				authUser = user;
+				break;
+			}
+		}
+		return authUser;
+	}
 	
 }

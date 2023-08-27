@@ -3,6 +3,7 @@ package controller;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -59,6 +60,14 @@ public class DashboardController extends HttpServlet {
 			System.out.println("estamos en movimientos 1");
 			this.verPorTodosMovimientos(request, response);
 			break;
+		case "gasto":
+			System.out.println("estamos en gasto");
+			this.gasto(request, response);
+			break;
+		case "ingreso":
+			System.out.println("estamos en ingreso");
+			this.ingreso(request, response);
+			break;
 		case "salir":
 			this.salir(request, response);
 			break;
@@ -69,7 +78,9 @@ public class DashboardController extends HttpServlet {
 		}
 	}
 
-//	entonces si es inicio se va a este metodo, que SIEMPRE debe poner el Error throws
+
+
+	//	entonces si es inicio se va a este metodo, que SIEMPRE debe poner el Error throws
 	private void inicio(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		// 1.- Obtener datos que me env�an en la solicitud
 
@@ -79,13 +90,40 @@ public class DashboardController extends HttpServlet {
 		response.sendRedirect("jsp/login.jsp");
 	}
 
-	private void dashboard(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	private void dashboard(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		// 1.- Obtener datos que me env�an en la solicitud
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("ctaUser");
+		String nameUser = user.getUser();
+		session.setAttribute("nameUser", nameUser);
+		
 
 		// 2.- Llamo al Modelo para obtener datos
+		Account account1 = new Account(0, "Banco Pichincha", 465); 
+		Account account2 = new Account(1, "Efectivo", 120);
+		List<Account> accounts = new ArrayList<>();
+		accounts.add(account1);
+		accounts.add(account2);
+
+		Category catgory1 = new Category(0, "Comida", 54.50);
+		Category catgory2 = new Category(1, "Vestimenta", 85.00);
+		List<Category> categoriesSpent = new ArrayList<>();
+		categoriesSpent.add(catgory1);
+		categoriesSpent.add(catgory2);
+		
+		Category catgory3 = new Category(0, "Nomina", 3000.0);
+		Category catgory4 = new Category(1, "Ahorros", 850.50);
+		List<Category> categoriesIncome = new ArrayList<>();
+		categoriesIncome.add(catgory3);
+		categoriesIncome.add(catgory4);
+	
+		
+		request.setAttribute("categoriasG", categoriesSpent);
+		request.setAttribute("categoriasI", categoriesIncome);
+		request.setAttribute("cuentas", accounts);	
 
 		// 3.- Llamo a la Vista
-		response.sendRedirect("jsp/dashboard.jsp");
+		request.getRequestDispatcher("jsp/dashboard.jsp").forward(request, response);
 	}
 
 //	y especificamente con este metodo nos ahorramos el logoutController, aplicando asi la teoria del ruteador
@@ -93,14 +131,31 @@ public class DashboardController extends HttpServlet {
 		request.getSession().invalidate();
 		response.sendRedirect("jsp/login.jsp");
 	}
+<<<<<<< HEAD
 	private void gasto(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		// 1.- Obtener datos que me env an en la solicitud
+=======
+	
+	private void gasto(HttpServletRequest request, HttpServletResponse response) {
+		// TODO Auto-generated method stub
+>>>>>>> 872f1a69e0a9a5f31e35190f088ccd28759ed501
 		Integer catId = Integer.parseInt(request.getParameter("categoria"));
 		String descripcion = request.getParameter("descripcion");
 		String fecha = request.getParameter("fecha");
 		String monto = request.getParameter("monto");
 		Integer cuentaId = Integer.parseInt(request.getParameter("cuenta"));
+<<<<<<< HEAD
+=======
+		
+		System.out.println(""+ catId + descripcion + fecha+ monto+ cuentaId);
+	}
+	
+	private void ingreso(HttpServletRequest request, HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		
+	}
+>>>>>>> 872f1a69e0a9a5f31e35190f088ccd28759ed501
 
 		// 2.- Llamo al Modelo para obtener datos
 		LocalDate fechaFormatted = LocalDate.parse(fecha);

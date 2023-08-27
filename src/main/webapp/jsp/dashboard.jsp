@@ -1,6 +1,6 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <fmt:setLocale value="en_US" />
@@ -34,9 +34,17 @@
 			<h1 class="font px-3 c-darkgray">Mi Chaucherita Web</h1>
 		</a>
 		<ul class="nav nav-pills">
+<<<<<<< HEAD
 			<li class="nav-item"><a href="LoginController" class="nav-link"><i
 					class="c-darkgray fa-solid fa-right-from-bracket fa-2xl i-hover"></i></a>
 			</li>
+=======
+		 <i class="mt-1"><a href="" class="nav-link c-darkgray">Bienvenido: </a></i>
+         <i class="mt-1"><a href="" class="nav-link c-darkgray">${sessionScope.nameUser}</a></i>
+            <li class="nav-item"><a href="./DashboardController?ruta=salir" class="nav-link"><i
+                        class="c-darkgray fa-solid fa-right-from-bracket fa-2xl i-hover"></i></a>
+            </li>
+>>>>>>> 872f1a69e0a9a5f31e35190f088ccd28759ed501
 		</ul>
 	</header>
 	<nav class="d-flex bg-darkgray justify-content-center">

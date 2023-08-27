@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="es">
@@ -24,10 +24,10 @@
 
     <div class="d-flex py-5 justify-content-center">
         <main class="form-signin w-100 ">
-            <form action="../LoginController?ruta=ingresar" method="POST" class="text-center">
+            <form action="LoginController?ruta=error" method="POST" class="text-center">
 
 
-                <h1 class="h3 mb-3 c-white font fw-normal">Iniciar SesiÃ³n </h1>
+                <h1 class="h3 mb-3 c-white font fw-normal">Iniciar Sesión</h1>
 
                 <div class="form-floating ">
                     <input type="text" name="usuario" class="form-control" id="floatingInput" placeholder="User">
@@ -35,7 +35,7 @@
                 </div>
                 <div class="form-floating">
                     <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password">
-                    <label class="font" for="floatingPassword">ContraseÃ±a</label>
+                    <label class="font" for="floatingPassword">Contraseña</label>
                 </div>
 
 
@@ -46,6 +46,7 @@
         </main>
 
     </div>
+    <h5 class="text-center c-yellow">Usuario o Clave Incorrectos! Intenta Nuevamente</h5>
 
 
 
