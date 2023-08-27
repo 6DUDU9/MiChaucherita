@@ -105,8 +105,8 @@ public class LoginController extends HttpServlet {
 
 		// 2.- Llamo al Modelo para obtener datos
 
-		User modelUser = new User();
-		User authUser = modelUser.authorize(ctausuario, clave);
+		JPAUser jpaUser = new JPAUser();
+		User authUser = jpaUser.authorize(ctausuario, clave);
 		
 		if (authUser != null) {
 			

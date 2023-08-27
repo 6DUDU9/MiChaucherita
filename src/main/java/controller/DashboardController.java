@@ -19,6 +19,7 @@ import model.Account;
 import model.Category;
 import model.Move;
 import model.Spent;
+import model.Type;
 import model.User;
 
 @WebServlet("/DashboardController")
@@ -104,12 +105,11 @@ public class DashboardController extends HttpServlet {
 		accounts.add(account1);
 		accounts.add(account2);
 
-		
-		List<Category> categoriesSpent = new ArrayList<>();
-		
+		JPACategory jpaCategory = new JPACategory();
+		List<Category> categoriesSpent = jpaCategory.getCategoryList(Type.SPENT);	
 
 		
-		List<Category> categoriesIncome = new ArrayList<>();
+		List<Category> categoriesIncome = jpaCategory.getCategoryList(Type.INCOME);
 	
 
 		request.setAttribute("categoriasG", categoriesSpent);
