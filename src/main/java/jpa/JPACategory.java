@@ -9,7 +9,7 @@ public class JPACategory {
 
 	
 	public Category getById(int id) {
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpaPersona");
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpaMiChaucherita");
 		EntityManager em = emf.createEntityManager();
 		
 		//Seleccionar la categoria que cumple con un id

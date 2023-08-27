@@ -160,7 +160,7 @@ public class DashboardController extends HttpServlet {
 			System.out.println("NO SE PUEDE REALIAR EL GASTO");
 		}
 
-		System.out.println("" + catId + descripcion + fecha + monto + cuentaId);
+		System.out.println("" + catId + descripcion + fecha + montoDouble + cuentaId);
 		// 3.- Llamo a la Vista
 		request.getRequestDispatcher("jsp/dashboard.jsp").forward(request, response);
 	}

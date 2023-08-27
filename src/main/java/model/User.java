@@ -33,9 +33,8 @@ public class User implements Serializable{
 		
 	}
 
-	public User(Integer id, String username, String password, List<Account> accounts) {
-		super();
-		this.id = id;
+	public User(String username, String password, List<Account> accounts) {
+		
 		this.username = username;
 		this.password = password;
 		this.accounts = accounts;
@@ -79,10 +78,9 @@ public class User implements Serializable{
 		if (users == null) {
 			users = new ArrayList<>();
 			
-			users.add(new User(1, "Daniel", "daniel123", null));
-			users.add(new User(2, "David", "david123", null ));
-			users.add(new User(3, "Jairo", "jairo123", null));
-			users.add(new User(4, "Dorian", "dorian123", null));
+			users.add(new User("Daniel", "daniel123", null));
+			users.add(new User("David", "david123", null ));
+			users.add(new User("Dorian", "dorian123", null));
 		}
 		return users;
 	}

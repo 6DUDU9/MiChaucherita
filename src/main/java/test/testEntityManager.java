@@ -136,7 +136,7 @@ public class testEntityManager {
 		List<Account> accounts = null;
 		
 //		tener la entity a insertar
-		User p1 = new User(1,"DAvid","12345",accounts);
+		User p1 = new User("Jairo","jairo123", accounts);
 
 		
 //		INSERTAR

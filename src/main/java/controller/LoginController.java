@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import jpa.JPAUser;
 import model.User;
 
 /**
@@ -77,8 +78,8 @@ public class LoginController extends HttpServlet {
 
 		// 2.- Llamo al Modelo para obtener datos
 
-		User modelUser = new User();
-		User authUser = modelUser.authorize(ctausuario, clave);
+		JPAUser jpaUser = new JPAUser();
+		User authUser = jpaUser.authorize(ctausuario, clave);
 		
 		if (authUser != null) {
 			

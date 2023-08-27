@@ -11,7 +11,7 @@ public class JPAAccount {
 	
 	
 	public Account getById(int id) {
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpaPersona");
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpaMiChaucherita");
 		EntityManager em = emf.createEntityManager();
 		
 		//Seleccionar la cuenta que cumple con un id
@@ -22,7 +22,7 @@ public class JPAAccount {
 	}
 
 	public void updateBalance(int id, double amount) {
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpaPersona");
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpaMiChaucherita");
 		EntityManager em = emf.createEntityManager();
 		
 		//Leo la persona con id 1
