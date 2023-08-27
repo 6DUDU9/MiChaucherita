@@ -9,9 +9,8 @@ public abstract class DAOFactory {
 		return factory;
 	}
 	
-//	Intanciar a los objetos de negocio
 	public abstract UserDAO getUserDAO();
-	/*public abstract AccountDAO getAccountDAO();
+	public abstract AccountDAO getAccountDAO();
 	public abstract CategoryDAO getCategoryDAO() ;
-	public abstract MoveDAO getMoveDAO();*/
+	public abstract MoveDAO getMoveDAO();
 }

@@ -1,8 +1,6 @@
 package model.entidades;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.*;
 
@@ -58,9 +56,5 @@ public class Category implements Serializable{
 	public void setValue(double value) {
 		this.value = value;
 	}
-	
-	
-
-//	------------------------ Methodes || Business Rules ------------------------
 	
 }

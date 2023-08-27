@@ -13,22 +13,19 @@ public class JPADAOFactory extends DAOFactory{
 		return new JPAUserDAO();
 	}
 
-	/*@Override
+	@Override
 	public AccountDAO getAccountDAO() {
-		// TODO Auto-generated method stub
 		return new JPAAccountDAO();
 	}
-
+	
 	@Override
 	public CategoryDAO getCategoryDAO() {
-		// TODO Auto-generated method stub
-		return new JPAUserDAO();
+		return new JPACategoryDAO();
 	}
-
+	
 	@Override
 	public MoveDAO getMoveDAO() {
-		// TODO Auto-generated method stub
-		return new JPAUserDAO();
-	}*/
+		return new JPAMoveDAO();
+	}
 
 }
