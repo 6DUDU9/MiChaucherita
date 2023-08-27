@@ -33,9 +33,11 @@
 			<h1 class="font px-3 c-darkgray">Mi Chaucherita Web</h1>
 		</a>
 		<ul class="nav nav-pills">
-			<li class="nav-item"><a href="LoginController" class="nav-link"><i
-					class="c-darkgray fa-solid fa-right-from-bracket fa-2xl i-hover"></i></a>
-			</li>
+		 <i class="mt-1"><a href="" class="nav-link c-darkgray">Bienvenido: </a></i>
+         <i class="mt-1"><a href="" class="nav-link c-darkgray">${sessionScope.nameUser}</a></i>
+            <li class="nav-item"><a href="./DashboardController?ruta=salir" class="nav-link"><i
+                        class="c-darkgray fa-solid fa-right-from-bracket fa-2xl i-hover"></i></a>
+            </li>
 		</ul>
 	</header>
 	<nav class="d-flex bg-darkgray justify-content-center">

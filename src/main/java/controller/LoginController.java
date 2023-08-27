@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.User;
+
 /**
  * Servlet implementation class LoginController
  */
@@ -45,6 +47,7 @@ public class LoginController extends HttpServlet {
 			this.salir(request, response);
 			break;
 		case "error":
+			this.error(request, response);
 			break;
 		default:
 			break;
@@ -67,13 +70,55 @@ public class LoginController extends HttpServlet {
 	
 //	si nos damos cuenta en esta seccion entraria lo que teniamos en el codigo doPost
 	private void ingresar(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		// 1.- Obtener datos que me env�an en la solicitud
+		// 1.- Obtener datos que me envian en la solicitud
 
-		String nombre = request.getParameter("usuario");
+		String ctausuario = request.getParameter("usuario");
 		String clave = request.getParameter("password");
 
 		// 2.- Llamo al Modelo para obtener datos
-		request.getRequestDispatcher("DashboardController?ruta=dashboard").forward(request, response);
+
+		User modelUser = new User();
+		User authUser = modelUser.authorize(ctausuario, clave);
 		
+		if (authUser != null) {
+			
+			// Crear la Sesion
+			HttpSession session = request.getSession();
+			session.setAttribute("ctaUser", authUser);
+			
+			// 3. Llamo a la Vista
+			response.sendRedirect("DashboardController?ruta=dashboard");
+			return;
+		}else {
+			// 3. Redireccionar a la Vista
+			request.getRequestDispatcher("jsp/error.jsp").forward(request, response);
+		}
+		
+	}
+	
+	private void error(HttpServletRequest request, HttpServletResponse response)throws IOException, ServletException{
+		// 1.- Obtener datos que me envian en la solicitud
+
+		String ctausuario = request.getParameter("usuario");
+		String clave = request.getParameter("password");
+
+		// 2.- Llamo al Modelo para obtener datos
+
+		User modelUser = new User();
+		User authUser = modelUser.authorize(ctausuario, clave);
+		
+		if (authUser != null) {
+			
+			// Crear la Sesion
+			HttpSession session = request.getSession();
+			session.setAttribute("ctaUser", authUser);
+			
+			// 3. Llamo a la Vista
+			response.sendRedirect("DashboardController?ruta=dashboard");
+			return;
+		}else {
+			// 3. Redireccionar a la Vista
+			request.getRequestDispatcher("jsp/error.jsp").forward(request, response);
+		}
 	}
 }

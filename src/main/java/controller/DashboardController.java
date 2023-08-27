@@ -90,6 +90,11 @@ public class DashboardController extends HttpServlet {
 
 	private void dashboard(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		// 1.- Obtener datos que me env�an en la solicitud
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("ctaUser");
+		String nameUser = user.getUser();
+		session.setAttribute("nameUser", nameUser);
+		
 
 		// 2.- Llamo al Modelo para obtener datos
 		Account account1 = new Account(0, "Banco Pichincha", 465); 
