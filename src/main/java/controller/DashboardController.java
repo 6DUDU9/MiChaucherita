@@ -94,12 +94,12 @@ public class DashboardController extends HttpServlet {
 		// 1.- Obtener datos que me env�an en la solicitud
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("ctaUser");
-		String nameUser = user.getUser();
+		String nameUser = user.getUsername();
 		session.setAttribute("nameUser", nameUser);
 
 		// 2.- Llamo al Modelo para obtener datos
-		Account account1 = new Account(0, "Banco Pichincha", 465);
-		Account account2 = new Account(1, "Efectivo", 120);
+		Account account1 = new Account(0, "Banco Pichincha", 465, user);
+		Account account2 = new Account(1, "Efectivo", 120, user);
 		List<Account> accounts = new ArrayList<>();
 		accounts.add(account1);
 		accounts.add(account2);

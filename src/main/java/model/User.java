@@ -79,10 +79,10 @@ public class User implements Serializable{
 		if (users == null) {
 			users = new ArrayList<>();
 			
-			users.add(new User(1, "Daniel", "daniel123"));
-			users.add(new User(2, "David", "david123"));
-			users.add(new User(3, "Jairo", "jairo123"));
-			users.add(new User(4, "Dorian", "dorian123"));
+			users.add(new User(1, "Daniel", "daniel123", null));
+			users.add(new User(2, "David", "david123", null ));
+			users.add(new User(3, "Jairo", "jairo123", null));
+			users.add(new User(4, "Dorian", "dorian123", null));
 		}
 		return users;
 	}
@@ -91,7 +91,7 @@ public class User implements Serializable{
 		User authUser = null;
 		List<User> listUsers = this.getUsers();
 		for (User user : listUsers) {
-			if (user.getUser().equals(ctausuario) && user.getPassword().equals(password)) {
+			if (user.getUsername().equals(ctausuario) && user.getPassword().equals(password)) {
 				authUser = user;
 				break;
 			}
