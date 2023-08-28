@@ -1,6 +1,6 @@
 package model.DAO;
 
-import modelo.jpa.JPADAOFactory;
+import model.jpa.JPADAOFactory;
 
 public abstract class DAOFactory {
 	protected static DAOFactory factory = new JPADAOFactory(); //Inyecci�n de dependencias

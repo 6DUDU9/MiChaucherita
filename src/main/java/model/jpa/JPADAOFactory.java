@@ -1,4 +1,4 @@
-package modelo.jpa;
+package model.jpa;
 
 import model.DAO.AccountDAO;
 import model.DAO.CategoryDAO;

@@ -1,4 +1,4 @@
-package modelo.jpa;
+package model.jpa;
 
 import java.util.List;
 
