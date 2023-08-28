@@ -48,15 +48,12 @@ public class JPAMoveDAO extends JPAGenericDAO<Move, Integer> implements MoveDAO{
 	}
 
 	@Override
-	public Double getBalanceByType(Date date, Type categoryType) {
+	public Double getBalanceByType(Type categoryType) {
         try {
             String jpql = "SELECT SUM(m.amount) FROM Move m " +
-                          "WHERE FUNCTION('YEAR', m.date) = FUNCTION('YEAR', :date) " +
-                          "AND FUNCTION('MONTH', m.date) = FUNCTION('MONTH', :date) " +
-                          "AND m.category.type = :categoryType";
+                          "WHERE m.category.type = :categoryType";
 
             TypedQuery<Double> query = em.createQuery(jpql, Double.class);
-            query.setParameter("date", date);
             query.setParameter("categoryType", categoryType);
 
             Double income = query.getSingleResult();

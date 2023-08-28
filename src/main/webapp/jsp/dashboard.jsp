@@ -55,8 +55,9 @@
 			<li class="nav-item"><a data-bs-toggle="modal"
 				data-bs-target="#transferModal"
 				class="nav-link c-yellow a-hover fs-5">Transferencia</a></li>
-			<li class="nav-item"><a href="./DashboardController?ruta=verPorTodosMovimientos"
-				class="nav-link c-yellow a-hover fs-5">Ver movimientos</a></li>
+			<li class="nav-item"><a
+				href="./DashboardController?ruta=verPorTodosMovimientos"
+				class="nav-link c-yellow a-hover fs-5">Ver todos los movimientos</a></li>
 		</ul>
 	</nav>
 	<div class="bg-gray">
@@ -94,8 +95,10 @@
 							<h4 class="fw-bold m-0">
 								<fmt:formatNumber type="currency" value="${cuenta.balance}" />
 							</h4>
-							<a href="./DashboardController?ruta=verPorCuenta&cuentaID=${cuenta.id}" class=" d-inline-block link-offset-2 link-underline link-underline-opacity-0 link-underline-opacity-100-hover">Ver movimientos</a> <a
-								class=" d-inline-block link-offset-2 link-underline link-underline-opacity-0 link-underline-opacity-100-hover">Ajustar</a>	
+							<a
+								href="./DashboardController?ruta=verPorCuenta&cuentaID=${cuenta.id}"
+								class=" d-inline-block link-offset-2 link-underline link-underline-opacity-0 link-underline-opacity-100-hover">Ver
+								movimientos</a> 
 						</div>
 					</c:forEach>
 
@@ -113,7 +116,7 @@
 									<h4 class="fw-bold text-danger  m-0">
 										<fmt:formatNumber type="currency" value="${categoria.value}" />
 									</h4>
-									<a
+									<a href="./DashboardController?ruta=verPorCategoria&catID=${categoria.id}"
 										class="d-inline-block link-offset-2 link-underline link-underline-opacity-0 link-underline-opacity-100-hover">Ver
 										movimientos</a>
 								</div>
@@ -132,7 +135,7 @@
 								<h4 class="fw-bold text-success  m-0">
 									<fmt:formatNumber type="currency" value="${categoria.value}" />
 								</h4>
-								<a
+								<a href="./DashboardController?ruta=verPorCategoria&catID=${categoria.id}"
 									class="d-inline-block link-offset-2 link-underline link-underline-opacity-0 link-underline-opacity-100-hover">Ver
 									movimientos</a>
 							</div>

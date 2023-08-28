@@ -47,12 +47,49 @@
 		<div class="card mb-4 rounded-3 shadow-sm">
 			<div
 				class="card-header bg-dark-subtle d-flex justify-content-center py-3">
-				<form action="" class="text-center">
-					<input type="month"
-						class="text-center bg-dark-subtle border-0 form-control font-s-30"
-						value="2023-07" name="" id="">
-					<button type="submit" class="btn btn-hover bg-yellow fw-bold">Actualizar</button>
-				</form>
+
+				<c:choose>
+					<c:when test="${verTipo eq 'Todas'}">
+						<form action="DashboardController?ruta=verPorTodosMovimientos"
+							method="POST" class="text-center">
+							<input type="date"
+								class="text-center bg-dark-subtle border-0 form-control font-s-30"
+								value="${date}" name="fecha" id="fecha">
+							<h1 class=" my-3">${accountName}</h1>
+
+
+							<button type="submit" class="btn btn-hover bg-yellow fw-bold">Actualizar</button>
+						</form>
+					</c:when>
+					<c:when test="${verTipo eq 'Cuenta'}">
+						<form
+							action="DashboardController?ruta=verPorCuenta&cuentaID=${cuentaID}"
+							method="POST" class="text-center">
+							<input type="date"
+								class="text-center bg-dark-subtle border-0 form-control font-s-30"
+								value="${date}" name="fecha" id="fecha">
+							<h1 class=" my-3">${accountName}</h1>
+
+
+							<button type="submit" class="btn btn-hover bg-yellow fw-bold">Actualizar</button>
+						</form>
+					</c:when>
+					<c:when test="${verTipo eq 'Cat'}">
+						<form
+							action="DashboardController?ruta=verPorCategoria&catID=${catID}"
+							method="POST" class="text-center">
+							<input type="date"
+								class="text-center bg-dark-subtle border-0 form-control font-s-30"
+								value="${date}" name="fecha" id="fecha">
+							<h1 class=" my-3">${accountName}</h1>
+
+
+							<button type="submit" class="btn btn-hover bg-yellow fw-bold">Actualizar</button>
+						</form>
+					</c:when>
+				</c:choose>
+
+
 			</div>
 			<table class="table">
 				<thead>
@@ -65,13 +102,19 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<th scope="row">dd-mm-aa</th>
-						<td>Cuenta 1</td>
-						<td>$10.00</td>
-						<td>Ropa</td>
-						<td>Compra de bufanda</td>
-					</tr>
+					<c:forEach items="${movimientos}" var="movimiento">
+						<tr>
+							<th scope="row">${movimiento.date}</th>
+							<td>${movimiento.account.accountName}</td>
+
+
+							<td style="color: ${movimiento.category.type == 'INCOME' ? 'green' : movimiento.category.type == 'SPENT' ? 'red' : 'black'}">${movimiento.balance}</td>
+
+
+							<td>${movimiento.category.categoryName}</td>
+							<td>${movimiento.description}</td>
+						</tr>
+					</c:forEach>
 				</tbody>
 			</table>
 		</div>
