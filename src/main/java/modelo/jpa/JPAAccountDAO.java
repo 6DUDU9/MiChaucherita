@@ -6,6 +6,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import model.DAO.AccountDAO;
 import model.entidades.Account;
+import model.entidades.User;
 
 public class JPAAccountDAO  extends JPAGenericDAO<Account, Integer> implements AccountDAO{
 
@@ -41,6 +42,19 @@ public class JPAAccountDAO  extends JPAGenericDAO<Account, Integer> implements A
 		em.getTransaction().begin();
 		em.merge(account);
 		em.getTransaction().commit();	
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public void actualizarUsuarioCuentas(User user) {
+		Query q = em.createQuery("SELECT a FROM Account a");
+		List<Account> accounts = q.getResultList();
+		em.getTransaction().begin();
+		for (Account account : accounts) {
+			account.setUser(user);
+			em.merge(account);
+		}
+		em.getTransaction().commit();		
 	}
 
 }

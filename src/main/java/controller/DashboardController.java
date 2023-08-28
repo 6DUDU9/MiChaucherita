@@ -18,9 +18,6 @@ import model.entidades.Category;
 import model.entidades.Move;
 import model.entidades.Type;
 import model.entidades.User;
-import modelo.jpa.JPAAccount;
-import modelo.jpa.JPACategory;
-import modelo.jpa.JPAMove;
 
 @WebServlet("/DashboardController")
 public class DashboardController extends HttpServlet {
@@ -92,8 +89,7 @@ public class DashboardController extends HttpServlet {
 		}
 	}
 
-	private void transferencia(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	private void transferencia(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		// 1.- Obtener datos que me envï¿½an en la solicitud
 		String descripcion = request.getParameter("descripcion");
@@ -107,24 +103,20 @@ public class DashboardController extends HttpServlet {
 		// Convertir la cadena a un valor double
 		double montoDouble = Double.parseDouble(montoSinSigno);
 
-		JPACategory jpaCategory = new JPACategory();
-		JPAAccount jpaAccount = new JPAAccount();
-
-		List<Category> categories = jpaCategory.getCategoryList(Type.TRANSFER);
+		List<Category> categories = DAOFactory.getFactory().getCategoryDAO().getCategoryList(Type.TRANSFER);
 		Category category = categories.get(0);
-		Account accountO = jpaAccount.getById(cuentaIdOrigen);
-		Account accountD = jpaAccount.getById(cuentaIdDestino);
+		Account accountO = DAOFactory.getFactory().getAccountDAO().getById(cuentaIdOrigen);
+		Account accountD = DAOFactory.getFactory().getAccountDAO().getById(cuentaIdDestino);
 
 		if (accountO.check(montoDouble)) {
-			JPAMove jpaMove = new JPAMove();
 			// Se resta el dinero de la cuenta de origen
 			Move spentMove = new Move(fechaFormatted, montoDouble, descripcion, category, accountO);
-			jpaMove.insertMove(spentMove);
-			jpaAccount.updateBalance(cuentaIdOrigen, -montoDouble);
+			DAOFactory.getFactory().getMoveDAO().insertMove(spentMove);
+			DAOFactory.getFactory().getAccountDAO().updateBalance(cuentaIdOrigen, -montoDouble);
 			// Se aumenta el dinero en la cuenta de destino
 			Move incomeMove = new Move(fechaFormatted, montoDouble, descripcion, category, accountD);
-			jpaMove.insertMove(incomeMove);
-			jpaAccount.updateBalance(cuentaIdDestino, montoDouble);
+			DAOFactory.getFactory().getMoveDAO().insertMove(incomeMove);
+			DAOFactory.getFactory().getAccountDAO().updateBalance(cuentaIdDestino, montoDouble);
 
 		} else {
 			System.out.println("NO SE PUEDE REALIAR LA TRANSFERENCIA");
@@ -258,8 +250,7 @@ public class DashboardController extends HttpServlet {
 			e.printStackTrace(); // Manejo de la excepción (puedes personalizarlo)
 		}
 		// 2.- Llamo al Modelo para obtener datos
-		JPAMove jpaMove = new JPAMove();
-		ArrayList<Move> movimientos = (ArrayList<Move>) jpaMove.getAllMovebyUser(date, user);
+		ArrayList<Move> movimientos = DAOFactory.getFactory().getMoveDAO().getAllMovebyUser(date, user);
 
 		// 3.- Llamo a la Vista enviando datos
 		request.setAttribute("accountName", "Todas las Cuentas");
@@ -290,13 +281,11 @@ public class DashboardController extends HttpServlet {
 		}
 
 		// Este metodo me ayuda a obtener por Id una cuenta
-		JPAAccount jpaAccount = new JPAAccount();
-		Account account = (Account) jpaAccount.getById(cuentaID);
+		Account account = DAOFactory.getFactory().getAccountDAO().getById(cuentaID);
 		System.out.println(account.getAccountName());
 
 		// 2.- Llamo al Modelo para obtener datos
-		JPAMove jpaMove = new JPAMove();
-		ArrayList<Move> movimientos = (ArrayList<Move>) jpaMove.filtrar(date, account);
+		ArrayList<Move> movimientos = DAOFactory.getFactory().getMoveDAO().filtrar(date, account);
 
 		// 3.- Llamo a la Vista enviando datos
 		request.setAttribute("user", user);
@@ -326,12 +315,10 @@ public class DashboardController extends HttpServlet {
 				}
 
 				// Este metodo me ayuda a obtener por Id una cuenta
-				JPACategory jpaCategory = new JPACategory();
-				Category category = (Category) jpaCategory.getById(catID);
+				Category category = DAOFactory.getFactory().getCategoryDAO().getById(catID);
 
 				// 2.- Llamo al Modelo para obtener datos
-				JPAMove jpaMove = new JPAMove();
-				ArrayList<Move> movimientos = (ArrayList<Move>) jpaMove.filtrar(date, category);
+				ArrayList<Move> movimientos = DAOFactory.getFactory().getMoveDAO().filtrar(date, category);
 
 				// 3.- Llamo a la Vista enviando datos
 				request.setAttribute("user", user);

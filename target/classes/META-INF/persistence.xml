@@ -36,7 +36,7 @@
 				value="create-tables" /-->
 
 			<!-- Esta Opcion borra la base de datos y la crea de nuevo -->
-			<!-- property name="eclipselink.ddl-generation" value="drop-and-create-tables"/-->
+			<!--property name="eclipselink.ddl-generation" value="drop-and-create-tables"/-->
 
 			<!-- esta opcion cada que ejecutemos no borra ni crea, persiste sobre 
 				las tablas que ya estan -->
