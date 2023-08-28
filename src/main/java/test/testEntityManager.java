@@ -12,7 +12,6 @@ import model.entidades.Account;
 import model.entidades.Category;
 import model.entidades.Type;
 import model.entidades.User;
-import modelo.jpa.JPAAccount;
 
 
 public class testEntityManager {
