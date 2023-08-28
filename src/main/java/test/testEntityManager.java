@@ -8,6 +8,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
+import model.DAO.DAOFactory;
 import model.entidades.Account;
 import model.entidades.Category;
 import model.entidades.Type;
@@ -135,9 +136,7 @@ public class testEntityManager {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpaMiChaucherita");
 		EntityManager em = emf.createEntityManager();
 		
-		JPAAccount jpaAccount = new JPAAccount();
-		List<Account> accounts = jpaAccount.getAll();
-		
+		List<Account> accounts = DAOFactory.getFactory().getAccountDAO().getAll();
 //		tener la entity a insertar
 		User p1 = new User("Jairo","jairo123", accounts);
 		User p2 = new User("David","david123", accounts);
