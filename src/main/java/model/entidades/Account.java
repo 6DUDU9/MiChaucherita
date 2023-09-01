@@ -20,7 +20,7 @@ public class Account implements Serializable{
 	@ManyToOne(cascade = CascadeType.REFRESH)
 	@JoinColumn(name = "user")
 	private User user;
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "accountO")
 	private List<Move> moves;
 	
 //	------------------------ BUILDER ------------------------

@@ -20,8 +20,11 @@ public class Move implements Serializable {
 	@Column(name = "description")
 	private String description;
 	@ManyToOne(cascade = CascadeType.REFRESH)
-	@JoinColumn(name = "account")
-	private Account account;
+	@JoinColumn(name = "accountO")
+	private Account accountO;
+	@ManyToOne(cascade = CascadeType.REFRESH)
+	@JoinColumn(name = "accountD")
+	private Account accountD;
 	@ManyToOne(cascade = CascadeType.REFRESH)
 	@JoinColumn(name = "category")
 	private Category category;
@@ -31,12 +34,13 @@ public class Move implements Serializable {
 		
 	}
 
-	public Move(Date date, double balance, String description, Category category, Account account) {
+	public Move(Date date, double amount, String description, Category category, Account account, Account accountD) {
 		this.date = date;
-		this.amount = balance;
+		this.amount = amount;
 		this.description = description;
 		this.category = category;
-		this.account = account;
+		this.accountO = account;
+		this.accountD = accountD;
 	}
 
 //	------------------------ SET && GET ------------------------ 
@@ -56,12 +60,12 @@ public class Move implements Serializable {
 		this.date = date;
 	}
 
-	public double getBalance() {
+	public double getAmount() {
 		return amount;
 	}
 
-	public void setBalance(double balance) {
-		this.amount = balance;
+	public void setAmount(double amount) {
+		this.amount = amount;
 	}
 
 	public String getDescription() {
@@ -80,19 +84,27 @@ public class Move implements Serializable {
 		this.category = category;
 	}
 
-	public Account getAccount() {
-		return account;
+	public Account getAccountO() {
+		return accountO;
 	}
 
-	public void setAccount(Account account) {
-		this.account = account;
+	public void setAccountO(Account accountO) {
+		this.accountO = accountO;
+	}
+	
+	public Account getAccountD() {
+		return accountD;
+	}
+
+	public void setAccountD(Account accountD) {
+		this.accountD = accountD;
 	}
 
 //	------------------------ Methodes || Business Rules ------------------------
 	@Override
 	public String toString() {
 		return "Category=" + category.getCategoryName() + "\n"+ "amount=" + amount + ", description=" + description+", date=" + date  
-				+ ", account=" + account + "]";
+				+ ", account=" + accountO + "]";
 	}
 
 	

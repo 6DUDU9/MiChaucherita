@@ -15,5 +15,6 @@ public interface MoveDAO {
 	public ArrayList<Move> filtrar(Date date, Account account);
 	public ArrayList<Move> filtrar(Date date, Category category);
 	public void insertMove(Move move);
+	public void deleteMove(int id);
 	public Double getBalanceByType(Type categoryType);
 }

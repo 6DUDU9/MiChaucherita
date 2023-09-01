@@ -3,6 +3,7 @@ package model.jpa;
 import java.sql.Date;
 import java.util.ArrayList;
 
+
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
@@ -22,7 +23,7 @@ public class JPAMoveDAO extends JPAGenericDAO<Move, Integer> implements MoveDAO{
 	@SuppressWarnings("unchecked")
 	@Override
 	public ArrayList<Move> getAllMovebyUser(Date date, User user) {
-		String sentence = "SELECT m FROM Move m WHERE m.account IN (SELECT a FROM Account a WHERE a.user = :user) "
+		String sentence = "SELECT m FROM Move m WHERE m.accountO IN (SELECT a FROM Account a WHERE a.user = :user) "
 				+ "AND FUNCTION('YEAR', m.date) = FUNCTION('YEAR', :date) "
 				+ "AND FUNCTION('MONTH', m.date) = FUNCTION('MONTH', :date) ";
 
@@ -36,7 +37,7 @@ public class JPAMoveDAO extends JPAGenericDAO<Move, Integer> implements MoveDAO{
 	@SuppressWarnings("unchecked")
 	@Override
 	public ArrayList<Move> filtrar(Date date, Account account) {
-		String sentence = "SELECT m FROM Move m WHERE m.account = :account "
+		String sentence = "SELECT m FROM Move m WHERE m.accountO = :account "
 				+ "AND FUNCTION('YEAR', m.date) = FUNCTION('YEAR', :date) "
 				+ "AND FUNCTION('MONTH', m.date) = FUNCTION('MONTH', :date) ";
 
@@ -65,6 +66,14 @@ public class JPAMoveDAO extends JPAGenericDAO<Move, Integer> implements MoveDAO{
 	public void insertMove(Move move) {
 		em.getTransaction().begin();
 		em.persist(move);
+		em.getTransaction().commit();
+	}
+	
+	@Override
+	public void deleteMove(int id) {		
+		Move moveSearched = em.find(Move.class, id);
+		em.getTransaction().begin();		
+		em.remove(moveSearched);
 		em.getTransaction().commit();
 	}
 	

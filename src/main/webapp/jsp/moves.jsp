@@ -105,20 +105,67 @@
 					<c:forEach items="${movimientos}" var="movimiento">
 						<tr>
 							<th scope="row">${movimiento.date}</th>
-							<td>${movimiento.account.accountName}</td>
+							<td>${movimiento.accountO.accountName}</td>
 
 
-							<td style="color: ${movimiento.category.type == 'INCOME' ? 'green' : movimiento.category.type == 'SPENT' ? 'red' : 'black'}">${movimiento.balance}</td>
+							<td
+								class="${movimiento.category.type == 'INCOME' ? 'text-success' : movimiento.category.type == 'SPENT' ? 'text-danger' : 'text-dark'}">${movimiento.amount}</td>
 
 
 							<td>${movimiento.category.categoryName}</td>
 							<td>${movimiento.description}</td>
+							<td>
+								<button type="button" class="btn btn-sm delete-btn"
+									data-id="${movimiento.id}" data-amount="${movimiento.amount}"
+									data-accountO-id="${movimiento.accountO.id}"
+									data-accountD-id="${movimiento.accountD.id}"
+									data-verTipo="${verTipo}"
+									data-category-id="${movimiento.category.id}">
+									<i class="fa-solid fa-trash fa-2xl text-danger"></i>
+								</button>
+							</td>
+
 						</tr>
+
 					</c:forEach>
 				</tbody>
 			</table>
 		</div>
 	</div>
+	<script>
+		const deleteButtons = document.querySelectorAll('.delete-btn');
+
+		deleteButtons
+				.forEach(function(deleteButton) {
+					deleteButton
+							.addEventListener(
+									'click',
+									function() {
+										const deleteUrl = 'DashboardController?ruta=eliminarMovimiento&movimientoId='
+												+ this.getAttribute('data-id')
+												+ '&amount='
+												+ this
+														.getAttribute('data-amount')
+												+ '&accountIdO='
+												+ this
+														.getAttribute('data-accountO-id')
+												+ '&accountIdD='
+												+ this
+														.getAttribute('data-accountD-id')
+												+ '&verTipo='
+												+ this
+														.getAttribute('data-verTipo')
+												+ '&categoryId='
+												+ this
+														.getAttribute('data-category-id');
+
+										window.location.href = deleteUrl;
+									});
+				});
+	</script>
+
+
+
 	<script
 		src=" https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"

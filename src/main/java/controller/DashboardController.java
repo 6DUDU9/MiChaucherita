@@ -67,6 +67,10 @@ public class DashboardController extends HttpServlet {
 		case "salir":
 			this.salir(request, response);
 			break;
+		case "eliminarMovimiento":
+			System.out.println("eliminarMovimiento");
+			this.eliminarMovimiento(request, response);
+			break;
 		case "error":
 			break;
 //			C.U: Ver Movmientos
@@ -89,7 +93,8 @@ public class DashboardController extends HttpServlet {
 		}
 	}
 
-	private void transferencia(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private void transferencia(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		// 1.- Obtener datos que me envï¿½an en la solicitud
 		String descripcion = request.getParameter("descripcion");
@@ -110,12 +115,10 @@ public class DashboardController extends HttpServlet {
 
 		if (accountO.check(montoDouble)) {
 			// Se resta el dinero de la cuenta de origen
-			Move spentMove = new Move(fechaFormatted, montoDouble, descripcion, category, accountO);
-			DAOFactory.getFactory().getMoveDAO().insertMove(spentMove);
+			Move transferMove = new Move(fechaFormatted, montoDouble, descripcion, category, accountO, accountD);
+			DAOFactory.getFactory().getMoveDAO().insertMove(transferMove);
 			DAOFactory.getFactory().getAccountDAO().updateBalance(cuentaIdOrigen, -montoDouble);
 			// Se aumenta el dinero en la cuenta de destino
-			Move incomeMove = new Move(fechaFormatted, montoDouble, descripcion, category, accountD);
-			DAOFactory.getFactory().getMoveDAO().insertMove(incomeMove);
 			DAOFactory.getFactory().getAccountDAO().updateBalance(cuentaIdDestino, montoDouble);
 
 		} else {
@@ -142,10 +145,10 @@ public class DashboardController extends HttpServlet {
 		User user = (User) session.getAttribute("ctaUser");
 		String nameUser = user.getUsername();
 		session.setAttribute("nameUser", nameUser);
-		//java.util.Date utilDate = new java.util.Date();
+		// java.util.Date utilDate = new java.util.Date();
 
 		// 2.- Llamo al Modelo para obtener datos
-		//Date date = new Date(utilDate.getTime());
+		// Date date = new Date(utilDate.getTime());
 		List<Account> accounts = DAOFactory.getFactory().getAccountDAO().getAll();
 		List<Category> categoriesSpent = DAOFactory.getFactory().getCategoryDAO().getCategoryList(Type.SPENT);
 		List<Category> categoriesIncome = DAOFactory.getFactory().getCategoryDAO().getCategoryList(Type.INCOME);
@@ -191,7 +194,7 @@ public class DashboardController extends HttpServlet {
 		Category category = DAOFactory.getFactory().getCategoryDAO().getById(catId);
 
 		if (account.check(montoDouble)) {
-			Move spentMove = new Move(fechaFormatted, montoDouble, descripcion, category, account);
+			Move spentMove = new Move(fechaFormatted, montoDouble, descripcion, category, account, null);
 			DAOFactory.getFactory().getMoveDAO().insertMove(spentMove);
 			DAOFactory.getFactory().getAccountDAO().updateBalance(cuentaId, -montoDouble);
 			DAOFactory.getFactory().getCategoryDAO().updateValue(catId, montoDouble);
@@ -220,7 +223,7 @@ public class DashboardController extends HttpServlet {
 		double montoDouble = Double.parseDouble(montoSinSigno);
 		Account account = DAOFactory.getFactory().getAccountDAO().getById(cuentaId);
 		Category category = DAOFactory.getFactory().getCategoryDAO().getById(catId);
-		Move incomeMove = new Move(fechaFormatted, montoDouble, descripcion, category, account);
+		Move incomeMove = new Move(fechaFormatted, montoDouble, descripcion, category, account, null);
 		DAOFactory.getFactory().getMoveDAO().insertMove(incomeMove);
 		DAOFactory.getFactory().getAccountDAO().updateBalance(cuentaId, montoDouble);
 		DAOFactory.getFactory().getCategoryDAO().updateValue(catId, montoDouble);
@@ -297,38 +300,84 @@ public class DashboardController extends HttpServlet {
 		request.getRequestDispatcher("jsp/moves.jsp").forward(request, response);
 	}
 
-	private void verPorCategoria(HttpServletRequest request, HttpServletResponse response, int catID) throws ServletException, IOException {
+	private void verPorCategoria(HttpServletRequest request, HttpServletResponse response, int catID)
+			throws ServletException, IOException {
 		// 1.- Obtener datos que me env�an en la solicitud
-				HttpSession session = request.getSession();
-				User user = (User) session.getAttribute("ctaUser");
-				String nameUser = user.getUsername();
-				session.setAttribute("nameUser", nameUser);
-				Date date = new Date(new java.util.Date().getTime()); // Inicializar con la fecha actual por defecto
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("ctaUser");
+		String nameUser = user.getUsername();
+		session.setAttribute("nameUser", nameUser);
+		Date date = new Date(new java.util.Date().getTime()); // Inicializar con la fecha actual por defecto
 
-				try {
-					String fecha = request.getParameter("fecha");
-					if (fecha != null && !fecha.isEmpty()) {
-						date = Date.valueOf(fecha);
-					}
-				} catch (Exception e) {
-					e.printStackTrace(); // Manejo de la excepción (puedes personalizarlo)
-				}
+		try {
+			String fecha = request.getParameter("fecha");
+			if (fecha != null && !fecha.isEmpty()) {
+				date = Date.valueOf(fecha);
+			}
+		} catch (Exception e) {
+			e.printStackTrace(); // Manejo de la excepción (puedes personalizarlo)
+		}
 
-				// Este metodo me ayuda a obtener por Id una cuenta
-				Category category = DAOFactory.getFactory().getCategoryDAO().getById(catID);
+		// Este metodo me ayuda a obtener por Id una cuenta
+		Category category = DAOFactory.getFactory().getCategoryDAO().getById(catID);
 
-				// 2.- Llamo al Modelo para obtener datos
-				ArrayList<Move> movimientos = DAOFactory.getFactory().getMoveDAO().filtrar(date, category);
+		// 2.- Llamo al Modelo para obtener datos
+		ArrayList<Move> movimientos = DAOFactory.getFactory().getMoveDAO().filtrar(date, category);
 
-				// 3.- Llamo a la Vista enviando datos
-				request.setAttribute("user", user);
-				request.setAttribute("catID", catID);
-				request.setAttribute("verTipo", "Cat");
-				request.setAttribute("accountName", category.getCategoryName());
-				request.setAttribute("movimientos", movimientos);
-				request.setAttribute("date", date);
-				request.getRequestDispatcher("jsp/moves.jsp").forward(request, response);
+		// 3.- Llamo a la Vista enviando datos
+		request.setAttribute("user", user);
+		request.setAttribute("catID", catID);
+		request.setAttribute("verTipo", "Cat");
+		request.setAttribute("accountName", category.getCategoryName());
+		request.setAttribute("movimientos", movimientos);
+		request.setAttribute("date", date);
+		request.getRequestDispatcher("jsp/moves.jsp").forward(request, response);
 
+	}
+
+	private void eliminarMovimiento(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
+		// 1.- Obtener datos que me env�an en la solicitud
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("ctaUser");
+		String nameUser = user.getUsername();
+		session.setAttribute("nameUser", nameUser);
+		String verTipo = request.getParameter("verTipo");
+		Integer moveId = Integer.parseInt(request.getParameter("movimientoId"));
+		Double amount = Double.parseDouble(request.getParameter("amount"));
+		Integer accountIdO = Integer.parseInt(request.getParameter("accountIdO"));
+		Integer accountIdD = -1;
+		Integer categoryId = Integer.parseInt(request.getParameter("categoryId"));
+		try {
+			accountIdD = Integer.parseInt(request.getParameter("accountIdD"));
+		} catch (Exception e) {
+			System.out.println("Id nulo");
+		}
+
+		// 2.- Llamo al Modelo para obtener datos
+		DAOFactory.getFactory().getMoveDAO().deleteMove(moveId);
+		Category category = DAOFactory.getFactory().getCategoryDAO().getById(categoryId);
+
+		if (category.getType().equals(Type.INCOME)) {
+			DAOFactory.getFactory().getCategoryDAO().updateValue(categoryId, -amount);
+			DAOFactory.getFactory().getAccountDAO().updateBalance(accountIdO, -amount);
+		} else if (category.getType().equals(Type.SPENT)) {
+			DAOFactory.getFactory().getCategoryDAO().updateValue(categoryId, -amount);
+			DAOFactory.getFactory().getAccountDAO().updateBalance(accountIdO, amount);
+		} else if (category.getType().equals(Type.TRANSFER)) {
+			DAOFactory.getFactory().getAccountDAO().updateBalance(accountIdO, amount);
+			DAOFactory.getFactory().getAccountDAO().updateBalance(accountIdD, -amount);
+		}
+
+		System.out.println(verTipo);
+		// 3.- Llamo a la Vista enviando datos
+		if (verTipo.equals("Todas")) {
+			request.getRequestDispatcher("DashboardController?ruta=verPorTodosMovimientos").forward(request, response);
+		} else if (verTipo.equals("Cuenta")) {
+			response.sendRedirect("DashboardController?ruta=verPorCuenta&cuentaID=" + accountIdO);
+		} else if (verTipo.equals("Cat")) {
+			response.sendRedirect("DashboardController?ruta=verPorCategoria&catID=" + categoryId);
+		}
 	}
 
 }

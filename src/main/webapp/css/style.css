@@ -170,6 +170,10 @@ body {
     color: #3a3a3c;
 }
 
+.i-hover-d:hover {
+    color: #cf0000;
+}
+
 .li-hover:hover .icon {
     color: #3a3a3c;
 }
