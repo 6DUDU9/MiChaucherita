@@ -29,14 +29,12 @@ public class DashboardController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 //		Siempre se Redirecciona
-		System.out.println("YA entro por get");
 		this.ruteador(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 //		Siempre se Redirecciona
-		System.out.println("YA entro por post");
 		this.ruteador(request, response);
 	}
 
@@ -46,15 +44,12 @@ public class DashboardController extends HttpServlet {
 
 		switch (ruta) {
 		case "inicio":
-			System.out.println("estamos en inicio");
 			this.inicio(request, response);
 			break;
 		case "dashboard":
-			System.out.println("estamos en dashboard");
 			this.dashboard(request, response);
 			break;
 		case "gasto":
-			System.out.println("estamos en gasto");
 			this.gasto(request, response);
 			break;
 		case "ingreso":
@@ -72,6 +67,7 @@ public class DashboardController extends HttpServlet {
 			this.eliminarMovimiento(request, response);
 			break;
 		case "error":
+			this.error(request, response);
 			break;
 //			C.U: Ver Movmientos
 		case "verPorTodosMovimientos":
@@ -91,6 +87,11 @@ public class DashboardController extends HttpServlet {
 		default:
 			break;
 		}
+	}
+
+	private void error(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+		response.sendRedirect("jsp/moveError.jsp");
 	}
 
 	private void transferencia(HttpServletRequest request, HttpServletResponse response)
@@ -120,13 +121,14 @@ public class DashboardController extends HttpServlet {
 			DAOFactory.getFactory().getAccountDAO().updateBalance(cuentaIdOrigen, -montoDouble);
 			// Se aumenta el dinero en la cuenta de destino
 			DAOFactory.getFactory().getAccountDAO().updateBalance(cuentaIdDestino, montoDouble);
-
+			// 3.- Llamo a la Vista
+			response.sendRedirect("DashboardController?ruta=dashboard");
 		} else {
 			System.out.println("NO SE PUEDE REALIAR LA TRANSFERENCIA");
+
+			response.sendRedirect("DashboardController?ruta=error");
 		}
 
-		// 3.- Llamo a la Vista
-		response.sendRedirect("DashboardController?ruta=dashboard");
 	}
 
 	private void inicio(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -198,13 +200,14 @@ public class DashboardController extends HttpServlet {
 			DAOFactory.getFactory().getMoveDAO().insertMove(spentMove);
 			DAOFactory.getFactory().getAccountDAO().updateBalance(cuentaId, -montoDouble);
 			DAOFactory.getFactory().getCategoryDAO().updateValue(catId, montoDouble);
+			// 3.- Llamo a la Vista
+
+			response.sendRedirect("DashboardController?ruta=dashboard");
 		} else {
 			System.out.println("NO SE PUEDE REALIAR EL GASTO");
+			response.sendRedirect("DashboardController?ruta=error");
 		}
 
-		System.out.println("" + catId + descripcion + fecha + montoDouble + cuentaId);
-		// 3.- Llamo a la Vista
-		response.sendRedirect("DashboardController?ruta=dashboard");
 	}
 
 	private void ingreso(HttpServletRequest request, HttpServletResponse response)

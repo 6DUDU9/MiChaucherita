@@ -4,8 +4,11 @@ import java.io.Serializable;
 import java.sql.Date;
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.*;
+
 @Entity
 @Table(name = "move")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Move implements Serializable {
 	
 	private static final long serialVersionUID = 1L;

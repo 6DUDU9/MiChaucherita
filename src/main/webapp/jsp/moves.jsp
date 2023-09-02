@@ -29,15 +29,12 @@
 			alt="Imagen de una billetera">
 			<h1 class="font px-3 c-darkgray">Mi Chaucherita Web</h1>
 		</a>
-		<ul class="nav nav-pills">
-			<i class="mt-1"><a href="" class="nav-link c-darkgray">Bienvenido:
-			</a></i>
-			<i class="mt-1"><a href="" class="nav-link c-darkgray">${sessionScope.nameUser}</a></i>
-			<li class="nav-item"><a href="./DashboardController?ruta=salir"
-				class="nav-link"><i
-					class="c-darkgray fa-solid fa-right-from-bracket fa-2xl i-hover"></i></a>
-			</li>
-		</ul>
+		<div class="d-flex gap-2 align-items-center">
+            <p class="m-0 fs-5 c-darkgray">Bienvenido: </p>
+            <a href="" class="fs-5 c-darkgray nav-link fw-bold me-4">${sessionScope.nameUser}</a>
+            <a href="./DashboardController?ruta=salir" class="nav-link"><i
+                    class="c-darkgray fa-solid fa-right-from-bracket fa-2xl i-hover"></i></a>
+        </div>
 	</header>
 	<nav class="bg-darkgray" style="height: 46px;"></nav>
 
@@ -81,7 +78,7 @@
 							<input type="date"
 								class="text-center bg-dark-subtle border-0 form-control font-s-30"
 								value="${date}" name="fecha" id="fecha">
-							<h1 class=" my-3">${accountName}</h1>
+							<h1 class="fw-bold my-3">${accountName}</h1>
 
 
 							<button type="submit" class="btn btn-hover bg-yellow fw-bold">Actualizar</button>
@@ -94,26 +91,26 @@
 			<table class="table">
 				<thead>
 					<tr>
-						<th scope="col">Fecha</th>
-						<th scope="col">Cuenta</th>
-						<th scope="col">Monto</th>
-						<th scope="col">Categoría</th>
-						<th scope="col">Descripción</th>
+						<th class="fw-bold fs-4" scope="col">Fecha</th>
+						<th class="fw-bold fs-4" scope="col">Cuenta</th>
+						<th class="fw-bold fs-4" scope="col">Monto</th>
+						<th class="fw-bold fs-4" scope="col">Categoría</th>
+						<th class="fw-bold fs-5" scope="col">Descripción</th>
 					</tr>
 				</thead>
 				<tbody>
 					<c:forEach items="${movimientos}" var="movimiento">
 						<tr>
-							<th scope="row">${movimiento.date}</th>
-							<td>${movimiento.accountO.accountName}</td>
+							<th class="fs-5" scope="row">${movimiento.date}</th>
+							<td class="fs-5">${movimiento.accountO.accountName}</td>
 
 
 							<td
-								class="${movimiento.category.type == 'INCOME' ? 'text-success' : movimiento.category.type == 'SPENT' ? 'text-danger' : 'text-dark'}">${movimiento.amount}</td>
+								class="fs-5 ${movimiento.category.type == 'INCOME' ? 'text-success' : movimiento.category.type == 'SPENT' ? 'text-danger' : 'text-dark'}">${movimiento.amount}</td>
 
 
-							<td>${movimiento.category.categoryName}</td>
-							<td>${movimiento.description}</td>
+							<td class="fs-5">${movimiento.category.categoryName}</td>
+							<td class="fs-5">${movimiento.description}</td>
 							<td>
 								<button type="button" class="btn btn-sm delete-btn"
 									data-id="${movimiento.id}" data-amount="${movimiento.amount}"

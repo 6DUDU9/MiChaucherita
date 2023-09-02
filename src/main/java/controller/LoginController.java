@@ -114,6 +114,8 @@ public class LoginController extends HttpServlet {
 			HttpSession session = request.getSession();
 			session.setAttribute("ctaUser", authUser);
 			
+			DAOFactory.getFactory().getAccountDAO().actualizarUsuarioCuentas(authUser);
+			
 			// 3. Llamo a la Vista
 			response.sendRedirect("DashboardController?ruta=dashboard");
 			return;

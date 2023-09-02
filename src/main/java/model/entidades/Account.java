@@ -3,8 +3,11 @@ package model.entidades;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.*;
+
 @Entity
 @Table(name = "Account")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Account implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -18,6 +21,7 @@ public class Account implements Serializable {
 	private Double balance;
 	@ManyToOne(cascade = CascadeType.REFRESH)
 	@JoinColumn(name = "user")
+	@JsonBackReference
 	private User user;
 
 //	------------------------ BUILDER ------------------------

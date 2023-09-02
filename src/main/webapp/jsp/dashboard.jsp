@@ -33,17 +33,14 @@
 			alt="Imagen de una billetera">
 			<h1 class="font px-3 c-darkgray">Mi Chaucherita Web</h1>
 		</a>
-		<ul class="nav nav-pills">
 
-			<i class="mt-1"><a href="" class="nav-link c-darkgray">Bienvenido:
-			</a></i>
-			<i class="mt-1"><a href="" class="nav-link c-darkgray">${sessionScope.nameUser}</a></i>
-			<li class="nav-item"><a href="./DashboardController?ruta=salir"
-				class="nav-link"><i
-					class="c-darkgray fa-solid fa-right-from-bracket fa-2xl i-hover"></i></a>
-			</li>
 
-		</ul>
+		<div class="d-flex gap-2 align-items-center">
+			<p class="m-0 fs-5 c-darkgray">Bienvenido:</p>
+			<a href="" class="fs-5 c-darkgray nav-link fw-bold me-4">${sessionScope.nameUser}</a>
+			<a href="./DashboardController?ruta=salir" class="nav-link"><i
+				class="c-darkgray fa-solid fa-right-from-bracket fa-2xl i-hover"></i></a>
+		</div>
 	</header>
 	<nav class="d-flex bg-darkgray justify-content-center">
 		<ul class="nav nav-pills">
@@ -98,7 +95,7 @@
 							<a
 								href="./DashboardController?ruta=verPorCuenta&cuentaID=${cuenta.id}"
 								class=" d-inline-block link-offset-2 link-underline link-underline-opacity-0 link-underline-opacity-100-hover">Ver
-								movimientos</a> 
+								movimientos</a>
 						</div>
 					</c:forEach>
 
@@ -116,7 +113,8 @@
 									<h4 class="fw-bold text-danger  m-0">
 										<fmt:formatNumber type="currency" value="${categoria.value}" />
 									</h4>
-									<a href="./DashboardController?ruta=verPorCategoria&catID=${categoria.id}"
+									<a
+										href="./DashboardController?ruta=verPorCategoria&catID=${categoria.id}"
 										class="d-inline-block link-offset-2 link-underline link-underline-opacity-0 link-underline-opacity-100-hover">Ver
 										movimientos</a>
 								</div>
@@ -135,7 +133,8 @@
 								<h4 class="fw-bold text-success  m-0">
 									<fmt:formatNumber type="currency" value="${categoria.value}" />
 								</h4>
-								<a href="./DashboardController?ruta=verPorCategoria&catID=${categoria.id}"
+								<a
+									href="./DashboardController?ruta=verPorCategoria&catID=${categoria.id}"
 									class="d-inline-block link-offset-2 link-underline link-underline-opacity-0 link-underline-opacity-100-hover">Ver
 									movimientos</a>
 							</div>

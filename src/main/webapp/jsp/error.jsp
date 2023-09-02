@@ -24,7 +24,7 @@
 
     <div class="d-flex py-5 justify-content-center">
         <main class="form-signin w-100 ">
-            <form action="LoginController?ruta=error" method="POST" class="text-center">
+            <form action="../LoginController?ruta=error" method="POST" class="text-center">
 
 
                 <h1 class="h3 mb-3 c-white font fw-normal">Iniciar Sesión</h1>

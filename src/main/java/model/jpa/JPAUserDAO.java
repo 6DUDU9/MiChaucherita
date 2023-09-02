@@ -2,6 +2,7 @@ package model.jpa;
 
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
+
 import model.entidades.User;
 import model.DAO.UserDAO;
 
@@ -21,6 +22,15 @@ public class JPAUserDAO extends JPAGenericDAO<User, Integer> implements UserDAO{
 			User userAutorizado = (User) query.getSingleResult();
 			return userAutorizado;
 		} catch (NoResultException e) {
+			return null;
+		}
+	}
+	@Override
+	public User getById(int id) {
+		try {
+			User user = (User) em.find(User.class, id);
+			return user;
+		} catch (Exception e) {
 			return null;
 		}
 	}

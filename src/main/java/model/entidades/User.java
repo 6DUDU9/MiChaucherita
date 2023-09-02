@@ -3,9 +3,12 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.*;
+
 
 @Entity
 @Table(name = "User")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class User implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
